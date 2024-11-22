@@ -1,0 +1,184 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Style */
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Style */
+.header-style {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo-style {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img-content {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url('../assets/study-room-logo.png') no-repeat center center;
+    background-size: cover;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.website-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-header {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-header li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-header li a:hover {
+    background-color: #3e8e41;
+}
+
+/* Article and Section Style */
+article {
+    background-color: #f9f9f9;
+    color: #333;
+    /* padding: 20px; */
+    /* margin: 4px; */
+    /* background-color: white; */
+    /* border-radius: 10px; */
+    /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
+}
+
+section {
+    padding: 20px;
+    background-color: #f4f4f4;
+    height: 95vh;
+    /* margin-bottom: 20px; */
+    /* border: 1px solid #ddd; */
+    /* border-radius: 10px; */
+    /* width: 100vw; */
+}
+
+
+/* Hero Section Style */
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    /* border-radius: 10px; */
+}
+
+.hero-content {
+    max-width: 50%;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.cta-buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-primary {
+    background-color: #3e8e41;
+}
+
+.cta-primary:hover {
+    background-color: #357a38;
+}
+
+.cta-secondary {
+    background-color: #66bb6a;
+}
+
+.cta-secondary:hover {
+    background-color: #5aa15f;
+}
+
+.hero-image img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+/* About Section Style */
+section#about {
+    background-color: #e9f5e9;
+}
+
+section#contact {
+    background-color: #e9f1f9;
+}
+
+section h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* Footer Style */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #333;
+    color: white;
+    /* margin-top: 40px; */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-style {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* article {
+        margin: 20px;
+    } */
+}

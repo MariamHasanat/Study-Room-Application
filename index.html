@@ -6,76 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./static/style.css">
     <title>Study Room Application</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            /*Primary Links/Buttons: #007BFF (Light Blue)*/
-            --primary-color: #007bff;
-            /*Secondary Buttons: #FF6A13 (Light Orange)*/
-            --secondary-color: #ff6a13;
-            /*Background: #FFFFFF (White) or #F4F4F4 (Light Gray)*/
-            --white-background-color: #fff;
-            --gray-light-background-color: #f4f4f4;
-            /*Main Text: #333333 (Dark Gray)*/
-            --main-text-color: #333;
-            --second-text-color: #f5f5f5;
-            /*Top Background (Header): #003366 (Dark Blue)*/
-            --top-background-header-color: #036;
-            /*Bottom Background (Footer): #F9F9F9 (Light Gray)*/
-            --bottom-background-footer-color: #f9f9f9;
-
-            font-size: 16px;
-
-        }
-
-
-
-        /* Header Style */
-        .header-style {
-            background-color: var(--top-background-header-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-        }
-
-        .nav-header,
-        .logo-style {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        /* Text Style and Colors */
-        li,
-        a,
-        span {
-            text-decoration: none;
-            list-style: none;
-            color: var(--second-text-color);
-        }
-
-        .logo-img-content {
-            content: url("assets/study-room-logo.png");
-            width: 3rem;
-        }
-
-        /* Style the Body */
-        body{
-            background-color: var(--gray-light-background-color);
-           
-        }
-        /* Style the Footer */
-        footer{
-            background-color: var(--bottom-background-footer-color);
-            color: var(--main-text-color);
-        }
-    </style>
 </head>
 
 <body>
@@ -92,7 +22,20 @@
         </nav>
     </header>
     <article>
-        <section id="get-started">Hero</section>
+        <section id="get-started" class="hero-section">
+            <div class="hero-content">
+                <h1>Transform Your Study Sessions</h1>
+                <p>Collaborate, focus, and achieve more with our personalized study tools.</p>
+                <div class="cta-buttons">
+                    <a href="#about" class="cta-primary">Get Started</a>
+                    <a href="#features" class="cta-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="study-room-illustration.png" alt="Study Room Illustration">
+            </div>
+        </section>
+        
         <section id="about">About Us</section>
         <section id="contact">Contact</section>
     </article>
