@@ -147,6 +147,57 @@ section {
 section#about {
     background-color: #e9f5e9;
 }
+.about-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #e9f1f9;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #4CAF50;
+}
+
+.about-section p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.about-section h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+.about-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-section ul li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.about-section ul li::before {
+    content: "✔";
+    color: #4CAF50;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Contact us Section Style */
 
 section#contact {
     background-color: #e9f1f9;
