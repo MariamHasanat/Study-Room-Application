@@ -6,28 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/signup.css">
     <title>Study Room Application</title>
+    <style>
+        .signup-body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 97vh;
+            width: 97vw;
+        }
+    </style>
 </head>
 
-<body>
-    <form action="post" class="form-container">
-        <div class="form-group">
-            <label for="name">User Name</label>
-            <input type="text" name="name" id="name" placeholder="Enter your name">
+<body class="signup-body">
+    <div class="form-container">
+        <!-- Branding Section -->
+        <div class="form-header">
+            <img src="../assets/study-room-logo.png" alt="Website Logo" class="form-logo">
+            <h1 class="form-title">Study Room Application</h1>
         </div>
-        <div class="form-group">
-            <label for="email">User Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter your password">
-        </div>
-        <div class="form-group">
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="Re-enter your password">
-        </div>
-        <button type="submit" class="form-submit">Create Account</button>
-    </form>    
+
+        <!-- Form Section -->
+        <form action="post">
+            <div class="form-group">
+                <label for="name">User Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email">User Email</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password">First Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" name="confirm-password" id="confirm-password"
+                    placeholder="Confirm your password">
+            </div>
+            <button type="submit" class="form-submit">Create Account</button>
+        </form>
+    </div>
+
 </body>
 
 </html>
