@@ -4,15 +4,23 @@ const heading = document.querySelector('.user-name');
 
 heading.innerHTML = userData.name;
 
-document.getElementById("add-subject-btn").addEventListener("click", function () {
-    document.getElementById("add-subject-form").classList.remove("hidden");
+const addSubjectBtn = document.getElementById("add-subject-btn");
+const cancelBtn = document.getElementById("cancel-btn");
+const addBtn = document.getElementById("add-btn");
+const addSubjectForm = document.getElementById("add-subject-form");
+const formOverlay = document.getElementById("form-overlay");
+
+addSubjectBtn.addEventListener("click", function () {
+    addSubjectForm.classList.remove("hidden");
+    formOverlay.style.display = "block"; // Show overlay
 });
 
-document.getElementById("cancel-btn").addEventListener("click", function () {
-    document.getElementById("add-subject-form").classList.add("hidden");
+cancelBtn.addEventListener("click", function () {
+    addSubjectForm.classList.add("hidden");
+    formOverlay.style.display = "none"; // Hide overlay
 });
 
-document.getElementById("add-btn").addEventListener("click", function () {
+addBtn.addEventListener("click", function () {
     const subjectName = document.getElementById("subject-name-input").value.trim();
     if (subjectName) {
         const subjectList = document.getElementById("subject-list");
@@ -27,8 +35,14 @@ document.getElementById("add-btn").addEventListener("click", function () {
         `;
         subjectList.appendChild(newSubject);
         document.getElementById("subject-name-input").value = "";
-        document.getElementById("add-subject-form").classList.add("hidden");
+        addSubjectForm.classList.add("hidden");
+        formOverlay.style.display = "none"; // Hide overlay
     } else {
         alert("Please enter a subject name.");
     }
+});
+
+formOverlay.addEventListener("click", function () {
+    addSubjectForm.classList.add("hidden");
+    formOverlay.style.display = "none"; // Hide overlay if clicked outside
 });

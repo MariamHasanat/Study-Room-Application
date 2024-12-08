@@ -22,36 +22,29 @@
     </header>
     <article>
         <div class="total-time">00:00:00</div>
-        <ul>
+        <ul id="subject-list">
             <li class="subject-info">
                 <span class="color">
-                    <span class="material-symbols-outlined">
-                        play_arrow
-                    </span>
+                    <span class="material-symbols-outlined">play_arrow</span>
                 </span>
                 <span class="subject-name">Arabic</span>
                 <span class="subject-time">00:00:00</span>
             </li>
-            <li class="subject-info">
-                <span class="color">
-                    <span class="material-symbols-outlined">
-                        play_arrow
-                    </span>
-                </span>
-                <span class="subject-name">English</span>
-                <span class="subject-time">00:00:00</span>
-            </li>
-            <li class="subject-info">
-                <span class="color">
-                    <span class="material-symbols-outlined">
-                        play_arrow
-                    </span>
-                </span>
-                <span class="subject-name">NoSQL</span>
-                <span class="subject-time">00:00:00</span>
-            </li>
         </ul>
-        <button type="button">+ Subject</button>
+        <button id="add-subject-btn" type="button">+ Subject</button>
+
+        <!-- Overlay background -->
+        <div id="form-overlay"></div>
+
+        <!-- Form to Add New Subject -->
+        <div id="add-subject-form" class="hidden">
+            <h3>Add New Subject</h3>
+            <input type="text" id="subject-name-input" placeholder="Enter subject name" />
+            <div class="form-buttons">
+                <button id="add-btn" type="button">Add</button>
+                <button id="cancel-btn" type="button">Cancel</button>
+            </div>
+        </div>
     </article>
     <footer class="footer-section">
         <div class="footer-content">
