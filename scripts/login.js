@@ -47,6 +47,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     // Check if password matches (You should use Firebase Auth for real apps)
     if (password === userData.password) {
       alert("Login successful!");
+      localStorage.setItem(userData.name, JSON.stringify(userData));
       window.location.href = "../pages/home.html"; // Redirect to home page
     } else {
       alert("Incorrect password. Please try again.");
