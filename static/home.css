@@ -1,1 +1,78 @@
 @import url('./style.css');
+
+/* Style for Total Time */
+.total-time {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    color: #4CAF50;
+}
+
+/* Style for Subject List */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 20px;
+}
+
+.subject-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.3s ease;
+}
+
+.subject-info:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subject-info .material-symbols-outlined {
+    color: #4CAF50;
+    font-size: 1.2rem;
+}
+
+.subject-name {
+    text-align: left;
+    flex: 1;
+    margin-left: 10px;
+}
+
+/* Style for Add Subject Button */
+button[type="button"] {
+    display: block;
+    margin: 20px 0 0 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: left;
+}
+
+button[type="button"]:hover {
+    background-color: #357a38;
+}
+
+/* Fixed Footer Style */
+.footer-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 2px solid #4CAF50;
+    z-index: 1000;
+}
