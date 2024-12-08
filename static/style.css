@@ -425,23 +425,6 @@ section#contact {
     color: #66bb6a;
 }
 
-/* Responsive Design */
-/* @media (max-width: 768px) {
-    .header-style {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .nav-header {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-} */
-
 /* General Responsive Adjustments */
 @media (max-width: 1024px) {
     .header-style {
