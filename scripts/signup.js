@@ -49,6 +49,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     await setDoc(userRef, {
       name,
       email,
+      password,
       createdAt: new Date().toISOString()
     });
 
