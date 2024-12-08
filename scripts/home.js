@@ -103,7 +103,7 @@ function addSubjectClickListener(subjectElement, subjectName) {
             // Store timestamp in Realtime Database
             const timestamp = new Date().toISOString();
             const userSubjectRef = ref(realTimeDb, `users/${userData.email}/subjects/${subjectName}`);
-            await set(userSubjectRef, { lastAccessed: timestamp });
+            await set(userSubjectRef, { startTime: timestamp });
 
             // Redirect to study page with subject name as a query parameter
             window.location.href = `study.html?subject=${encodeURIComponent(subjectName)}`;
