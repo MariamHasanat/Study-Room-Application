@@ -1,21 +1,6 @@
 // Import Firebase SDK
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDMOlVGRnfwTCa83YpF4gUpbYYMu4jMnBA",
-    authDomain: "study-room-application.firebaseapp.com",
-    projectId: "study-room-application",
-    storageBucket: "study-room-application.firebasestorage.app",
-    messagingSenderId: "102691908238",
-    appId: "1:102691908238:web:b4d54c3fb01d5e0ca077df",
-    measurementId: "G-DW46LFLGB3"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { app, firestore } from "./firebase-config.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -38,14 +23,14 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     return;
   }
 
-  if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
-    alert("Password must be at least 8 characters long and include uppercase, lowercase, and a number.");
+  if (password.length < 4 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+    alert("Password must be at least 4 characters long and include uppercase, lowercase, and a number.");
     return;
   }
 
   try {
     // Add user info to Firestore
-    const userRef = doc(db, "users", email); // Use email as a unique document ID
+    const userRef = doc(firestore, "users", email); // Use email as a unique document ID
     await setDoc(userRef, {
       name,
       email,

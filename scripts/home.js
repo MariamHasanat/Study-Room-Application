@@ -1,24 +1,7 @@
 // Import Firebase SDK
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getFirestore, doc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDMOlVGRnfwTCa83YpF4gUpbYYMu4jMnBA",
-    authDomain: "study-room-application.firebaseapp.com",
-    projectId: "study-room-application",
-    storageBucket: "study-room-application.firebasestorage.app",
-    messagingSenderId: "102691908238",
-    appId: "1:102691908238:web:b4d54c3fb01d5e0ca077df",
-    measurementId: "G-DW46LFLGB3",
-    databaseURL: "https://study-room-application-default-rtdb.europe-west1.firebasedatabase.app/"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const realTimeDb = getDatabase(app);
+import { app, firestore, database } from "./firebase-config.js";
+import { doc, setDoc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { ref, set as setRTDB } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
 // Load user data from local storage
 const userData = JSON.parse(localStorage.getItem("userName"));
@@ -60,7 +43,7 @@ addBtn.addEventListener("click", async () => {
 
     try {
         // Update Firestore
-        const userRef = doc(db, "users", userData.email); // Use email as the document ID
+        const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
         await updateDoc(userRef, {
             subjects: arrayUnion({ name: subjectName, time: "00:00:00" })
         });
@@ -102,8 +85,8 @@ function addSubjectClickListener(subjectElement, subjectName) {
         try {
             // Store timestamp in Realtime Database
             const timestamp = new Date().toISOString();
-            const userSubjectRef = ref(realTimeDb, `users/${userData.email}/subjects/${subjectName}`);
-            await set(userSubjectRef, { startTime: timestamp });
+            const userSubjectRef = ref(database, `users/${userData.email}/subjects/${subjectName}`);
+            await setRTDB(userSubjectRef, { startTime: timestamp });
 
             // Redirect to study page with subject name as a query parameter
             window.location.href = `study.html?subject=${encodeURIComponent(subjectName)}`;
@@ -113,6 +96,31 @@ function addSubjectClickListener(subjectElement, subjectName) {
         }
     });
 }
+
+// Fetch and render subjects from Firestore on page load
+async function renderSubjects() {
+    const userRef = doc(firestore, "users", userData.email);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+        const subjects = userSnap.data().subjects || [];
+        subjectList.innerHTML = "";
+        subjects.forEach(subj => {
+            const li = document.createElement("li");
+            li.className = "subject-info";
+            li.innerHTML = `
+                <span class="color">
+                    <span class="material-symbols-outlined">play_arrow</span>
+                </span>
+                <span class="subject-name">${subj.name}</span>
+                <span class="subject-time">${subj.time || "00:00:00"}</span>
+            `;
+            subjectList.appendChild(li);
+            addSubjectClickListener(li, subj.name);
+        });
+    }
+}
+
+window.addEventListener("DOMContentLoaded", renderSubjects);
 
 // Add click events to existing subjects
 document.querySelectorAll(".subject-info").forEach(subjectElement => {

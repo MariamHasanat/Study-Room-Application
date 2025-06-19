@@ -1,22 +1,6 @@
 // Import Firebase SDK
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDMOlVGRnfwTCa83YpF4gUpbYYMu4jMnBA",
-  authDomain: "study-room-application.firebaseapp.com",
-  projectId: "study-room-application",
-  storageBucket: "study-room-application.firebasestorage.app",
-  messagingSenderId: "102691908238",
-  appId: "1:102691908238:web:b4d54c3fb01d5e0ca077df",
-  measurementId: "G-DW46LFLGB3"
-};
-
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { app, firestore } from "./firebase-config.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -34,7 +18,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     // Retrieve user data from Firestore
-    const userRef = doc(db, "users", email);
+    const userRef = doc(firestore, "users", email);
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
