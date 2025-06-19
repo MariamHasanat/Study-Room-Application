@@ -1,8 +1,7 @@
 // Import Firebase SDK
 import { get, ref, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { database } from "./firebase-config.js";
+import { firestore, database } from "./firebase-config.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { firestore } from "./firebase-config.js";
 
 // Use shared database instance
 const realTimeDb = database;
@@ -25,10 +24,16 @@ subjectTitleElement.textContent = subjectName || "Unknown Subject";
 let startTime = Date.now();
 let timerInterval;
 
+// Function to sanitize email for database paths
+function sanitizeEmail(email) {
+    return email.replace(/\./g, ',');
+}
+
 // Get start time from Realtime Database when the page loads
 window.addEventListener("load", async () => {
     try {
-        const userSubjectRef = ref(realTimeDb, `users/${userData.email}/subjects/${subjectName}`);
+        const safeEmail = sanitizeEmail(userData.email);
+        const userSubjectRef = ref(realTimeDb, `users/${safeEmail}/subjects/${subjectName}`);
         const snapshot = await get(userSubjectRef);
 
         if (snapshot.exists() && snapshot.val().startTime) {
@@ -56,7 +61,8 @@ function msToTimeString(ms) {
 function stopTimer() {
     const endTime = Date.now();
     try {
-        const userSubjectRef = ref(realTimeDb, `users/${userData.email}/subjects/${subjectName}`);
+        const safeEmail = sanitizeEmail(userData.email);
+        const userSubjectRef = ref(realTimeDb, `users/${safeEmail}/subjects/${subjectName}`);
         set(userSubjectRef, { startTime: startTime, endTime: endTime }).then(async () => {
             // Calculate session duration
             const sessionDuration = endTime - startTime;

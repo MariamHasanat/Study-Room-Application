@@ -79,13 +79,18 @@ addBtn.addEventListener("click", async () => {
     }
 });
 
+function sanitizeEmail(email) {
+    return email.replace(/\./g, ',');
+}
+
 // Function to handle subject click events
 function addSubjectClickListener(subjectElement, subjectName) {
     subjectElement.addEventListener("click", async () => {
         try {
             // Store timestamp in Realtime Database
             const timestamp = new Date().toISOString();
-            const userSubjectRef = ref(database, `users/${userData.email}/subjects/${subjectName}`);
+            const safeEmail = sanitizeEmail(userData.email);
+            const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
             await setRTDB(userSubjectRef, { startTime: timestamp });
 
             // Redirect to study page with subject name as a query parameter
