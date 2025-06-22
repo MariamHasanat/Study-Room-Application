@@ -184,7 +184,44 @@ button[type="button"]:hover {
 }
 
 .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    color: #4CAF50;
+    border: 1.5px solid #4CAF50;
+    border-radius: 20px;
+    padding: 6px 18px;
     margin-left: 20px;
-    padding: 6px 16px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+}
+.logout-btn:hover {
+    background: #4CAF50;
+    color: #fff;
+    border-color: #388E3C;
+}
+.logout-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.logout-text {
+    vertical-align: middle;
+    font-size: 1rem;
+}
+@media (max-width: 600px) {
+    .logout-btn {
+        padding: 4px 10px;
+        font-size: 0.95rem;
+        margin-left: 8px;
+    }
+    .logout-icon {
+        width: 18px;
+        height: 18px;
+    }
 }
