@@ -159,3 +159,32 @@ button[type="button"]:hover {
 #cancel-btn:hover {
     background-color: #d32f2f;
 }
+
+/* Loader overlay styles */
+.loader-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.loader-overlay.active {
+    display: flex;
+}
+.loader-img {
+    width: 240px;
+    height: 240px;
+}
+
+.logout-btn {
+    margin-left: 20px;
+    padding: 6px 16px;
+    cursor: pointer;
+}

@@ -7,6 +7,10 @@ import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.
 const realTimeDb = database;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Show loader immediately
+    const loader = document.getElementById("loader");
+    if (loader) loader.classList.add("active");
+
     // Load user data from local storage
     const userData = JSON.parse(localStorage.getItem("userName"));
     const heading = document.querySelector(".user-name");
@@ -60,6 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error getting start time from Realtime Database: ", error);
             startTime = Date.now();
         }
+        // Hide loader after timer is ready and timer display starts
+        if (loader) loader.classList.remove("active");
         startTimerDisplay();
     })();
 

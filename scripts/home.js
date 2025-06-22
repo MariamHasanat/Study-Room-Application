@@ -141,7 +141,7 @@ function renderSubjectsAndTotalTimeLocalFirst() {
 
 window.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById("loader");
-    if (loader) loader.style.display = "flex";
+    if (loader) loader.classList.add("active");
     renderSubjectsAndTotalTimeLocalFirst();
 });
 
@@ -183,7 +183,7 @@ async function renderSubjectsAndTotalTimeFirestore() {
     }
     // Hide loader after data is ready
     const loader = document.getElementById("loader");
-    if (loader) loader.style.display = "none";
+    if (loader) loader.classList.remove("active");
 }
 
 function formatTime(ms) {

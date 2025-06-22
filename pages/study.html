@@ -19,13 +19,11 @@
             <span class="website-title">Study Room Application</span>
         </div>
         <div class="user-name"></div>
-        <button id="logout-btn" class="logout-btn"
-            style="margin-left:20px;padding:6px 16px;cursor:pointer;">Logout</button>
+        <button id="logout-btn" class="logout-btn">Logout</button>
     </header>
     <article>
-        <div id="loader"
-            style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.7);z-index:9999;align-items:center;justify-content:center;font-size:2rem;">
-            <span>Saving your study session...</span>
+        <div id="loader" class="loader-overlay">
+            <img src="../assets/ripples.svg" alt="Loading..." class="loader-img" />
         </div>
         <h1 id="subject-title">Subject Title</h1>
         <main>
