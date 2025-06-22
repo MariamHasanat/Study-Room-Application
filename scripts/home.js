@@ -139,6 +139,12 @@ function renderSubjectsAndTotalTimeLocalFirst() {
     renderSubjectsAndTotalTimeFirestore();
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "flex";
+    renderSubjectsAndTotalTimeLocalFirst();
+});
+
 async function renderSubjectsAndTotalTimeFirestore() {
     const userRef = doc(firestore, "users", userData.email);
     const userSnap = await getDoc(userRef);
@@ -175,6 +181,9 @@ async function renderSubjectsAndTotalTimeFirestore() {
             totalTimeElement.textContent = formatTime(totalMs);
         }
     }
+    // Hide loader after data is ready
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "none";
 }
 
 function formatTime(ms) {
@@ -184,10 +193,6 @@ function formatTime(ms) {
     const seconds = String(totalSeconds % 60).padStart(2, "0");
     return `${hours}:${minutes}:${seconds}`;
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-    renderSubjectsAndTotalTimeLocalFirst();
-});
 
 // Logout logic
 const logoutBtn = document.getElementById("logout-btn");
