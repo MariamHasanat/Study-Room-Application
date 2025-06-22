@@ -16,6 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const heading = document.querySelector(".user-name");
     if (heading && userData && userData.name) heading.innerHTML = userData.name;
 
+    // Greeting logic
+    const greetingDiv = document.querySelector(".header-greeting");
+    if (greetingDiv && userData && userData.name) {
+        const hour = new Date().getHours();
+        let greet = "Hello";
+        if (hour < 12) greet = "Good morning";
+        else if (hour < 18) greet = "Good afternoon";
+        else greet = "Good evening";
+        greetingDiv.textContent = `${greet}, ${userData.name} 👋🏆!`;
+    }
+
     // Parse URL parameters to extract subject name
     const urlParams = new URLSearchParams(window.location.search);
     const subjectName = urlParams.get("subject");

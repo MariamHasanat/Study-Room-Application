@@ -6,8 +6,22 @@ import { updateTotalStudyTime } from "./totalTime.js";
 
 // Load user data from local storage
 const userData = JSON.parse(localStorage.getItem("userName"));
+if (!userData || !userData.name || !userData.email) {
+    window.location.href = "../pages/login.html";
+}
 const heading = document.querySelector(".user-name");
-heading.innerHTML = userData.name;
+if (heading) heading.innerHTML = userData.name;
+
+// Greeting logic
+const greetingDiv = document.querySelector(".header-greeting");
+if (greetingDiv && userData && userData.name) {
+    const hour = new Date().getHours();
+    let greet = "Hello";
+    if (hour < 12) greet = "Good morning";
+    else if (hour < 18) greet = "Good afternoon";
+    else greet = "Good evening";
+    greetingDiv.textContent = `${greet}, ${userData.name} 👋🏆!`;
+}
 
 // DOM Elements
 const addSubjectBtn = document.getElementById("add-subject-btn");
