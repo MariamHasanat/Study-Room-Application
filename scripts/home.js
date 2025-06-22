@@ -188,3 +188,13 @@ function formatTime(ms) {
 window.addEventListener("DOMContentLoaded", () => {
     renderSubjectsAndTotalTimeLocalFirst();
 });
+
+// Logout logic
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("userName");
+        localStorage.removeItem("subjects");
+        window.location.href = "../pages/login.html";
+    });
+}

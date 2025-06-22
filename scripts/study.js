@@ -138,4 +138,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Stop Study Button Event
     const stopBtn = document.getElementById("stop-study-btn");
     if (stopBtn) stopBtn.addEventListener("click", stopTimer);
+
+    // Logout logic
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("userName");
+            localStorage.removeItem("subjects");
+            window.location.href = "../pages/login.html";
+        });
+    }
 });
