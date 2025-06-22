@@ -2,6 +2,7 @@
 import { app, firestore, database } from "./firebase-config.js";
 import { doc, setDoc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { ref, set as setRTDB } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { updateTotalStudyTime } from "./totalTime.js";
 
 // Load user data from local storage
 const userData = JSON.parse(localStorage.getItem("userName"));
@@ -125,7 +126,14 @@ async function renderSubjects() {
     }
 }
 
-window.addEventListener("DOMContentLoaded", renderSubjects);
+window.addEventListener("DOMContentLoaded", async () => {
+    await renderSubjects();
+    // Update total study time
+    const userData = JSON.parse(localStorage.getItem("userName"));
+    if (userData && userData.email) {
+        await updateTotalStudyTime(userData.email);
+    }
+});
 
 // Add click events to existing subjects
 document.querySelectorAll(".subject-info").forEach(subjectElement => {
