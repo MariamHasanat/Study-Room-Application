@@ -103,13 +103,49 @@ function addSubjectClickListener(subjectElement, subjectName) {
     });
 }
 
-// Fetch and render subjects from Firestore on page load
-async function renderSubjects() {
+// Fetch and render subjects from localStorage first, then Firestore
+function renderSubjectsAndTotalTimeLocalFirst() {
+    // Try localStorage first for instant UI
+    const localSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
+    subjectList.innerHTML = "";
+    let totalMs = 0;
+    localSubjects.forEach(subj => {
+        const li = document.createElement("li");
+        li.className = "subject-info";
+        li.innerHTML = `
+            <span class="color">
+                <span class="material-symbols-outlined">play_arrow</span>
+            </span>
+            <span class="subject-name">${subj.name}</span>
+            <span class="subject-time">${subj.time || "00:00:00"}</span>
+        `;
+        subjectList.appendChild(li);
+        addSubjectClickListener(li, subj.name);
+        // Calculate total time
+        if (subj.time) {
+            const parts = subj.time.split(":");
+            if (parts.length === 3) {
+                const ms = (+parts[0]) * 3600000 + (+parts[1]) * 60000 + (+parts[2]) * 1000;
+                totalMs += ms;
+            }
+        }
+    });
+    // Update total time in UI
+    const totalTimeElement = document.querySelector(".total-time-value");
+    if (totalTimeElement) {
+        totalTimeElement.textContent = formatTime(totalMs);
+    }
+    // Then update from Firestore in background
+    renderSubjectsAndTotalTimeFirestore();
+}
+
+async function renderSubjectsAndTotalTimeFirestore() {
     const userRef = doc(firestore, "users", userData.email);
     const userSnap = await getDoc(userRef);
     if (userSnap.exists()) {
         const subjects = userSnap.data().subjects || [];
         subjectList.innerHTML = "";
+        let totalMs = 0;
         subjects.forEach(subj => {
             const li = document.createElement("li");
             li.className = "subject-info";
@@ -122,21 +158,33 @@ async function renderSubjects() {
             `;
             subjectList.appendChild(li);
             addSubjectClickListener(li, subj.name);
+            // Calculate total time
+            if (subj.time) {
+                const parts = subj.time.split(":");
+                if (parts.length === 3) {
+                    const ms = (+parts[0]) * 3600000 + (+parts[1]) * 60000 + (+parts[2]) * 1000;
+                    totalMs += ms;
+                }
+            }
         });
+        // Update localStorage with latest subjects
+        localStorage.setItem("subjects", JSON.stringify(subjects));
+        // Update total time in UI
+        const totalTimeElement = document.querySelector(".total-time-value");
+        if (totalTimeElement) {
+            totalTimeElement.textContent = formatTime(totalMs);
+        }
     }
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
-    await renderSubjects();
-    // Update total study time
-    const userData = JSON.parse(localStorage.getItem("userName"));
-    if (userData && userData.email) {
-        await updateTotalStudyTime(userData.email);
-    }
-});
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+}
 
-// Add click events to existing subjects
-document.querySelectorAll(".subject-info").forEach(subjectElement => {
-    const subjectName = subjectElement.querySelector(".subject-name").textContent.trim();
-    addSubjectClickListener(subjectElement, subjectName);
+window.addEventListener("DOMContentLoaded", () => {
+    renderSubjectsAndTotalTimeLocalFirst();
 });

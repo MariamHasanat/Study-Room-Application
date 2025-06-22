@@ -6,108 +6,136 @@ import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.
 // Use shared database instance
 const realTimeDb = database;
 
-// Load user data from local storage
-const userData = JSON.parse(localStorage.getItem("userName"));
-const heading = document.querySelector(".user-name");
-heading.innerHTML = userData.name;
+document.addEventListener("DOMContentLoaded", () => {
+    // Load user data from local storage
+    const userData = JSON.parse(localStorage.getItem("userName"));
+    const heading = document.querySelector(".user-name");
+    if (heading && userData && userData.name) heading.innerHTML = userData.name;
 
-// Parse URL parameters to extract subject name
-const urlParams = new URLSearchParams(window.location.search);
-const subjectName = urlParams.get("subject");
+    // Parse URL parameters to extract subject name
+    const urlParams = new URLSearchParams(window.location.search);
+    const subjectName = urlParams.get("subject");
 
-// Display subject title
-const subjectTitleElement = document.getElementById("subject-title");
-subjectTitleElement.textContent = subjectName || "Unknown Subject";
+    // Display subject title
+    const subjectTitleElement = document.getElementById("subject-title");
+    if (subjectTitleElement) subjectTitleElement.textContent = subjectName || "Unknown Subject";
 
+    // Timer Variables
+    let startTime = Date.now();
+    let timerInterval;
+    let timerStarted = false;
+    window.timerShouldRun = true;
+    const studyTimerElement = document.getElementById("study-timer");
 
-// Timer Variables
-let startTime = Date.now();
-let timerInterval;
+    // Function to sanitize email for database paths
+    function sanitizeEmail(email) {
+        return email.replace(/\./g, ',');
+    }
 
-// Function to sanitize email for database paths
-function sanitizeEmail(email) {
-    return email.replace(/\./g, ',');
-}
+    // Timer display logic
+    function startTimerDisplay() {
+        if (!timerStarted) {
+            timerStarted = true;
+            timerInterval = setInterval(() => {
+                if (!window.timerShouldRun) return;
+                const elapsedTime = Date.now() - startTime;
+                if (studyTimerElement) studyTimerElement.textContent = formatTime(elapsedTime);
+            }, 1000);
+        }
+    }
 
-// Get start time from Realtime Database when the page loads
-window.addEventListener("load", async () => {
-    try {
-        const safeEmail = sanitizeEmail(userData.email);
-        const userSubjectRef = ref(realTimeDb, `users/${safeEmail}/subjects/${subjectName}`);
-        const snapshot = await get(userSubjectRef);
-
-        if (snapshot.exists() && snapshot.val().startTime) {
-            startTime = Number(snapshot.val().startTime);
-            if (isNaN(startTime)) startTime = Date.now();
-        } else {
+    // Get start time from Realtime Database when the page loads
+    (async () => {
+        try {
+            const safeEmail = sanitizeEmail(userData.email);
+            const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
+            const snapshot = await get(userSubjectRef);
+            if (snapshot.exists() && snapshot.val().startTime) {
+                startTime = Number(snapshot.val().startTime);
+                if (isNaN(startTime)) startTime = Date.now();
+            } else {
+                startTime = Date.now();
+            }
+        } catch (error) {
+            console.error("Error getting start time from Realtime Database: ", error);
             startTime = Date.now();
         }
-    } catch (error) {
-        console.error("Error getting start time from Realtime Database: ", error);
-        startTime = Date.now();
+        startTimerDisplay();
+    })();
+
+    // Function to convert milliseconds to time string
+    function msToTimeString(ms) {
+        const totalSeconds = Math.floor(ms / 1000);
+        const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+        const seconds = String(totalSeconds % 60).padStart(2, "0");
+        return `${hours}:${minutes}:${seconds}`;
     }
-});
+    function formatTime(ms) {
+        return msToTimeString(ms);
+    }
 
-// Function to convert milliseconds to time string
-function msToTimeString(ms) {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
-    const seconds = String(totalSeconds % 60).padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-}
-
-// Function to store end time when stop button is clicked
-function stopTimer() {
-    const endTime = Date.now();
-    try {
-        const safeEmail = sanitizeEmail(userData.email);
-        const userSubjectRef = ref(realTimeDb, `users/${safeEmail}/subjects/${subjectName}`);
-        set(userSubjectRef, { startTime: startTime, endTime: endTime }).then(async () => {
-            // Calculate session duration
-            const sessionDuration = endTime - startTime;
-
-            // Update Firestore subject total time
-            const userDocRef = doc(firestore, "users", userData.email);
-            const userDocSnap = await getDoc(userDocRef);
-            if (userDocSnap.exists()) {
-                let subjects = userDocSnap.data().subjects || [];
-                subjects = subjects.map(subj => {
-                    if (subj.name === subjectName) {
-                        // Convert previous time to ms
-                        const prev = subj.time ? subj.time.split(":") : ["00","00","00"];
-                        const prevMs = (+prev[0])*3600000 + (+prev[1])*60000 + (+prev[2])*1000;
-                        const newMs = prevMs + sessionDuration;
-                        return { ...subj, time: msToTimeString(newMs) };
-                    }
-                    return subj;
-                });
-                await updateDoc(userDocRef, { subjects });
+    // Stop Timer logic
+    function stopTimer() {
+        const endTime = Date.now();
+        window.timerShouldRun = false;
+        clearInterval(timerInterval); // Stop timer immediately
+        // Show loader
+        const loader = document.getElementById("loader");
+        if (loader) loader.style.display = "flex";
+        // Freeze timer display at final value
+        if (studyTimerElement) {
+            const elapsedTime = endTime - startTime;
+            studyTimerElement.textContent = formatTime(elapsedTime);
+        }
+        // Update localStorage instantly
+        let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+        subjects = subjects.map(subj => {
+            if (subj.name === subjectName) {
+                const prev = subj.time ? subj.time.split(":") : ["00","00","00"];
+                const prevMs = (+prev[0])*3600000 + (+prev[1])*60000 + (+prev[2])*1000;
+                const sessionDuration = endTime - startTime;
+                const newMs = prevMs + sessionDuration;
+                return { ...subj, time: msToTimeString(newMs) };
             }
-            // Redirect to home page after saving the end time
-            window.location.href = "../pages/home.html"; // Change to your home page route
+            return subj;
         });
-    } catch (error) {
-        console.error("Error storing end time in Realtime Database or updating Firestore: ", error);
-        alert("Failed to save subject activity. Please try again.");
+        localStorage.setItem("subjects", JSON.stringify(subjects));
+        // Perform DB updates, then redirect
+        (async () => {
+            try {
+                const safeEmail = sanitizeEmail(userData.email);
+                const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
+                await set(userSubjectRef, { startTime: startTime, endTime: endTime });
+                // Update Firestore subject total time
+                const userDocRef = doc(firestore, "users", userData.email);
+                const userDocSnap = await getDoc(userDocRef);
+                if (userDocSnap.exists()) {
+                    let subjects = userDocSnap.data().subjects || [];
+                    subjects = subjects.map(subj => {
+                        if (subj.name === subjectName) {
+                            const prev = subj.time ? subj.time.split(":") : ["00","00","00"];
+                            const prevMs = (+prev[0])*3600000 + (+prev[1])*60000 + (+prev[2])*1000;
+                            const sessionDuration = endTime - startTime;
+                            const newMs = prevMs + sessionDuration;
+                            return { ...subj, time: msToTimeString(newMs) };
+                        }
+                        return subj;
+                    });
+                    await updateDoc(userDocRef, { subjects });
+                }
+                // Hide loader and redirect
+                if (loader) loader.style.display = "none";
+                window.location.href = "../pages/home.html";
+            } catch (error) {
+                console.error("Error storing end time in Realtime Database or updating Firestore: ", error);
+                if (loader) loader.style.display = "none";
+                window.location.href = "../pages/home.html";
+            }
+        })();
     }
-}
 
-// Function to format elapsed time
-function formatTime(ms) {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
-    const seconds = String(totalSeconds % 60).padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-}
-
-// Start Timer
-const studyTimerElement = document.getElementById("study-timer");
-timerInterval = setInterval(() => {
-    const elapsedTime = Date.now() - startTime;
-    studyTimerElement.textContent = formatTime(elapsedTime);
-}, 1000);
-
-// Stop Study Button Event
-document.getElementById("stop-study-btn").addEventListener("click", stopTimer);
+    // Stop Study Button Event
+    const stopBtn = document.getElementById("stop-study-btn");
+    if (stopBtn) stopBtn.addEventListener("click", stopTimer);
+});
