@@ -113,54 +113,6 @@ article {
     background-color: #c0392b;
 }
 
-/* Footer Style */
-.footer-section {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    text-align: center;
-    border-top: 2px solid #4CAF50;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.footer-left p,
-.footer-left a {
-    color: white;
-    text-decoration: none;
-}
-
-.footer-left a:hover {
-    text-decoration: underline;
-}
-
-.social-icons {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-}
-
-.social-icons li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-}
-
-.social-icons li a:hover {
-    color: #4CAF50;
-}
-
 /* Loader overlay styles (shared with home page) */
 .loader-overlay {
     display: none;

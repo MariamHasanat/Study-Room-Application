@@ -327,16 +327,50 @@ section#contact {
     color: #357a38;
 }
 
+.social-icons {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icons li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons li a:hover {
+    color: #4CAF50;
+}
+
+.social-icons li a img {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: contain;
+    margin-right: 6px;
+}
+
+
 
 
 /* Footer Style */
 .footer-section {
     background-color: #333;
     color: white;
-    padding: 20px 40px;
+    padding: 10px 20px;
     font-size: 0.9rem;
     text-align: center;
     border-top: 2px solid #4CAF50;
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    width: 100%;
 }
 
 .footer-content {
@@ -417,6 +451,8 @@ section#contact {
 .back-to-top a:hover {
     color: #66bb6a;
 }
+
+
 
 /* General Responsive Adjustments */
 @media (max-width: 1024px) {
