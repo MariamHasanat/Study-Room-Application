@@ -1,5 +1,4 @@
 // Subject list rendering and management
-import { addSubjectClickListener } from './subject-utils.js';
 import { formatTime } from './time-utils.js';
 import { getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 

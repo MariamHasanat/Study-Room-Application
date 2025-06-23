@@ -3,8 +3,6 @@ import { get, ref, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebas
 import { firestore, database } from "./firebase-config.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-// Use shared database instance
-const realTimeDb = database;
 
 document.addEventListener("DOMContentLoaded", () => {
     // Show loader immediately

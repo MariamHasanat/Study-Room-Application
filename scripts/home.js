@@ -1,8 +1,6 @@
 // Import Firebase SDK
-import { app, firestore, database } from "./firebase-config.js";
-import { doc, setDoc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { ref, set as setRTDB } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { updateTotalStudyTime } from "./totalTime.js";
+import { firestore, database } from "./firebase-config.js";
+import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { renderSubjectsAndTotalTimeLocalFirst, renderSubjectsAndTotalTimeFirestore } from './subject-list.js';
 import { addSubjectClickListener } from './subject-utils.js';
 import { formatTime } from './time-utils.js';

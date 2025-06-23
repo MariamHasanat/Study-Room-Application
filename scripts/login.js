@@ -1,5 +1,5 @@
 // Import Firebase SDK
-import { app, firestore } from "./firebase-config.js";
+import { firestore } from "./firebase-config.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 // Form submission handler
