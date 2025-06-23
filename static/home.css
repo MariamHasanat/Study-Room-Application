@@ -43,6 +43,11 @@ ul {
     margin-left: 10px;
 }
 
+.website-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 /* Style for Add Subject Button */
 button[type="button"] {
     display: block;
@@ -95,7 +100,8 @@ button[type="button"]:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
-    z-index: 1000; /* Ensure the form appears on top */
+    z-index: 1000;
+    /* Ensure the form appears on top */
 }
 
 /* Overlay background */
@@ -106,8 +112,10 @@ button[type="button"]:hover {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Below the form but above other content */
-    display: none; /* Hidden by default */
+    z-index: 999;
+    /* Below the form but above other content */
+    display: none;
+    /* Hidden by default */
 }
 
 /* Form title */
@@ -168,60 +176,222 @@ button[type="button"]:hover {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
     z-index: 9999;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
 }
+
 .loader-overlay.active {
     display: flex;
 }
+
 .loader-img {
     width: 240px;
     height: 240px;
 }
 
+/* Header Style (copied from study.css for consistency) */
+.header-style {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+
+.logo-img-content {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url('../assets/study-room-logo.png') no-repeat center center;
+    background-size: cover;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.website-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-header {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-left: 0;
+    justify-content: center;
+}
+
+.nav-header li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: block;
+}
+
+.nav-header li a:hover {
+    background-color: #3e8e41;
+}
+
+.header-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-row-bottom {
+    margin-top: 6px;
+}
+
 .logout-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
     background: #fff;
     color: #4CAF50;
-    border: 1.5px solid #4CAF50;
+    border: 1px solid #4CAF50;
     border-radius: 20px;
-    padding: 6px 18px;
-    margin-left: 20px;
-    font-size: 1rem;
+    padding: 6px 14px;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s, color 0.2s, border 0.2s;
-    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.08);
+    margin-left: 12px;
 }
+
 .logout-btn:hover {
     background: #4CAF50;
     color: #fff;
-    border-color: #388E3C;
 }
+
 .logout-icon {
-    width: 22px;
-    height: 22px;
-    display: inline-block;
-    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
 }
+
 .logout-text {
     vertical-align: middle;
     font-size: 1rem;
 }
+@media (max-width: 768px) {
+    .header-style {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .website-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .footer-section {
+        height: auto;
+        min-height: 60px;
+        max-height: none;
+        padding: 10px 5px;
+    }
+
+    .footer-links,
+    .social-icons {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 600px) {
+    .header-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-row-bottom {
+        margin-top: 2px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
     .logout-btn {
         padding: 4px 10px;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
+        border-radius: 16px;
         margin-left: 8px;
     }
+
     .logout-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+    }
+
+    .website-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .header-greeting {
+        font-size: 0.95rem;
+        padding: 2px 6px;
+        height: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    #study-timer {
+        font-size: 3rem;
+    }
+
+    #stop-study-btn {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+
+    .header-greeting {
+        font-size: 0.95rem;
+        padding: 4px 10px;
+        margin-left: 0;
+        height: 32px;
+    }
+
+    .social-icons li a {
+        font-size: 1rem;
+    }
+
+    .footer-section {
+        font-size: 0.7rem;
+        padding: 6px 2px;
+    }
+
+    .footer-left,
+    .footer-center,
+    .footer-right {
+        font-size: 0.7rem;
+    }
+
+    .social-icons li a img {
         width: 18px;
         height: 18px;
+        margin-right: 4px;
     }
 }

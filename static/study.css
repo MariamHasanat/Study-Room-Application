@@ -1,6 +1,4 @@
-@import url('./home.css');
 
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
@@ -10,11 +8,12 @@
 
 /* Body Style */
 body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f9f9f9;
-    color: #333;
 }
 
 /* Header Style */
@@ -26,12 +25,9 @@ body {
     background-color: #4CAF50;
     color: white;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
 }
 
-.logo-style {
-    display: flex;
-    align-items: center;
-}
 
 .logo-img-content {
     display: inline-block;
@@ -48,32 +44,71 @@ body {
     font-weight: bold;
 }
 
-.header-greeting {
-    font-size: 1.1rem;
-    color: #fff;
-    background: rgba(76,175,80,0.15);
-    padding: 6px 18px;
-    border-radius: 20px;
-    margin-left: 20px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+.nav-header {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-left: 0;
+    justify-content: center;
+}
+
+.nav-header li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: block;
+}
+
+.nav-header li a:hover {
+    background-color: #3e8e41;
+}
+
+.header-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-row-bottom {
+    margin-top: 6px;
+}
+
+.logout-btn {
     display: flex;
     align-items: center;
-    height: 40px;
+    background: #fff;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+    margin-left: 12px;
 }
 
-@media (max-width: 600px) {
-    .header-greeting {
-        font-size: 0.95rem;
-        padding: 4px 10px;
-        margin-left: 8px;
-        height: 32px;
-    }
+.logout-btn:hover {
+    background: #4CAF50;
+    color: #fff;
 }
 
-/* Main Content Style */
+.logout-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
+
+/* Article and Section Style */
 article {
+    background-color: #f9f9f9;
+    color: #333;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -91,7 +126,6 @@ article {
 
 #study-timer {
     font-size: 6rem;
-    /* Biggest Element */
     font-weight: bold;
     color: #2c3e50;
     margin: 20px 0;
@@ -113,7 +147,7 @@ article {
     background-color: #c0392b;
 }
 
-/* Loader overlay styles (shared with home page) */
+/* Loader overlay styles */
 .loader-overlay {
     display: none;
     position: fixed;
@@ -136,4 +170,172 @@ article {
 .loader-img {
     width: 80px;
     height: 80px;
+}
+
+/* Footer Style (copied from style.css for consistency with index.html) */
+.footer-section {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 2px solid #4CAF50;
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.footer-left p,
+.footer-left a {
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.footer-left a:hover {
+    text-decoration: underline;
+}
+
+.footer-center {
+    flex: 1;
+}
+
+.footer-right {
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icons li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons li a:hover {
+    color: #4CAF50;
+}
+
+.social-icons li a img {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: contain;
+    margin-right: 6px;
+}
+
+@media (max-width: 768px) {
+    .header-style {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .website-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .footer-section {
+        height: auto;
+        min-height: 60px;
+        max-height: none;
+        padding: 10px 5px;
+    }
+
+    .footer-links,
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    #study-timer {
+        font-size: 3rem;
+    }
+
+    #stop-study-btn {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+
+    .header-greeting {
+        font-size: 0.95rem;
+        padding: 4px 10px;
+        margin-left: 0;
+        height: 32px;
+    }
+
+    .social-icons li a {
+        font-size: 1rem;
+    }
+
+    .footer-section {
+        font-size: 0.7rem;
+        padding: 6px 2px;
+    }
+
+    .footer-left,
+    .footer-center,
+    .footer-right {
+        font-size: 0.7rem;
+    }
+
+    .social-icons li a img {
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header-row-bottom {
+        margin-top: 2px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+    .logout-btn {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+        border-radius: 16px;
+        margin-left: 8px;
+    }
+    .logout-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+    }
 }
