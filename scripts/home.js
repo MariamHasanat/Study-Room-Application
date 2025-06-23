@@ -83,6 +83,10 @@ addBtn.addEventListener("click", async () => {
         // Add click event to the new subject
         addSubjectClickListener(newSubject, subjectName);
 
+        // Hide empty state image if visible
+        const emptyState = document.getElementById("empty-state");
+        if (emptyState) emptyState.style.display = "none";
+
         // Reset form and hide overlay
         document.getElementById("subject-name-input").value = "";
         addSubjectForm.classList.add("hidden");
@@ -122,6 +126,12 @@ function renderSubjectsAndTotalTimeLocalFirst() {
     // Try localStorage first for instant UI
     const localSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
     subjectList.innerHTML = "";
+    const emptyState = document.getElementById("empty-state");
+    if (localSubjects.length === 0) {
+        if (emptyState) emptyState.style.display = "block";
+    } else {
+        if (emptyState) emptyState.style.display = "none";
+    }
     let totalMs = 0;
     localSubjects.forEach(subj => {
         const li = document.createElement("li");
