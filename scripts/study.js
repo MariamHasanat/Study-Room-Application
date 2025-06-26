@@ -4,7 +4,16 @@ import { firestore, database } from "./firebase-config.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 
+
+for ( i = 0; i < 100; i++) {
+    // Preload images to prevent flickering
+    const img = new Image();
+    img.src = `../assets/images/loader/${i}.png`;
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
+
     // Show loader immediately
     const loader = document.getElementById("loader");
     if (loader) loader.classList.add("active");
@@ -61,8 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
     (async () => {
         try {
             const safeEmail = sanitizeEmail(userData.email);
+
+
             const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
             const snapshot = await get(userSubjectRef);
+          
+
             if (snapshot.exists() && snapshot.val().startTime) {
                 startTime = Number(snapshot.val().startTime);
                 if (isNaN(startTime)) startTime = Date.now();
@@ -117,11 +130,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         localStorage.setItem("subjects", JSON.stringify(subjects));
         // Perform DB updates, then redirect
+        
         (async () => {
             try {
+              
                 const safeEmail = sanitizeEmail(userData.email);
+                
                 const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
                 await set(userSubjectRef, { startTime: startTime, endTime: endTime });
+                
+                
                 // Update Firestore subject total time
                 const userDocRef = doc(firestore, "users", userData.email);
                 const userDocSnap = await getDoc(userDocRef);
