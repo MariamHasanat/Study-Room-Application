@@ -1,6 +1,8 @@
 // Import Firebase SDK
 import { app, firestore } from "./firebase-config.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+const auth = getAuth(app);
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -17,27 +19,17 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   }
 
   try {
-    // Retrieve user data from Firestore
+    // Login with Firebase Auth
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    // Optionally, fetch user profile from Firestore
     const userRef = doc(firestore, "users", email);
     const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      alert("User not found. Please check your email.");
-      return;
+    if (userSnap.exists()) {
+      localStorage.setItem('userName', JSON.stringify(userSnap.data()));
     }
-
-    const userData = userSnap.data();
-
-    // Check if password matches (You should use Firebase Auth for real apps)
-    if (password === userData.password) {
-      alert("Login successful!");
-      localStorage.setItem('userName', JSON.stringify(userData));
-      window.location.href = "../pages/home.html"; // Redirect to home page
-    } else {
-      alert("Incorrect password. Please try again.");
-    }
+    alert("Login successful!");
+    window.location.href = "../pages/home.html";
   } catch (error) {
-    console.error("Error retrieving document: ", error);
-    alert("Failed to login. Please try again.");
+    alert("Login failed: " + error.message);
   }
 });

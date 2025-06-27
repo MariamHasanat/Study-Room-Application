@@ -1,6 +1,8 @@
 // Import Firebase SDK
 import { app, firestore } from "./firebase-config.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+const auth = getAuth(app);
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -29,19 +31,18 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   }
 
   try {
-    // Add user info to Firestore
-    const userRef = doc(firestore, "users", email); // Use email as a unique document ID
+    // Create user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // Optionally, store extra info in Firestore
+    const userRef = doc(firestore, "users", email);
     await setDoc(userRef, {
       name,
       email,
-      password,
       createdAt: new Date().toISOString()
     });
-
     alert("Account created successfully.");
     window.location.href = "../pages/login.html"; // Redirect to login page
   } catch (error) {
-    console.error("Error adding document: ", error);
-    alert("Failed to create account. Please try again.");
+    alert(error.message);
   }
 });
