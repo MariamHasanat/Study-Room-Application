@@ -7,6 +7,8 @@ export function addSubjectClickListener(subjectElement, subjectName, database, u
             // Store timestamp in Realtime Database
             const timestamp = new Date().toISOString();
             const safeEmail = sanitizeEmail(userData.email);
+
+            
             const userSubjectRef = database ? ref(database, `users/${safeEmail}/subjects/${subjectName}`) : null;
             if (userSubjectRef) await set(userSubjectRef, { startTime: timestamp });
             // Redirect to study page with subject name as a query parameter

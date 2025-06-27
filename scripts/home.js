@@ -1,8 +1,6 @@
 // Import Firebase SDK
-import { app, firestore, database } from "./firebase-config.js";
-import { doc, setDoc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { ref, set as setRTDB } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { updateTotalStudyTime } from "./totalTime.js";
+import { firestore, database } from "./firebase-config.js";
+import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { renderSubjectsAndTotalTimeLocalFirst, renderSubjectsAndTotalTimeFirestore } from './subject-list.js';
 import { addSubjectClickListener } from './subject-utils.js';
 import { formatTime } from './time-utils.js';
@@ -55,16 +53,6 @@ addBtn.addEventListener("click", async () => {
     }
 
     try {
-        // Update Firestore
-        const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
-        await updateDoc(userRef, {
-            subjects: arrayUnion({ name: subjectName, time: "00:00:00" })
-        });
-
-        // Update Local Storage
-        const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
-        subjects.push({ name: subjectName, time: "00:00:00" });
-        localStorage.setItem("subjects", JSON.stringify(subjects));
 
         // Update UI
         const newSubject = document.createElement("li");
@@ -77,6 +65,19 @@ addBtn.addEventListener("click", async () => {
             <span class="subject-time">00:00:00</span>
         `;
         subjectList.appendChild(newSubject);
+
+        // Update Local Storage
+        const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+        subjects.push({ name: subjectName, time: "00:00:00" });
+        localStorage.setItem("subjects", JSON.stringify(subjects));
+
+
+        // Update Firestore
+        const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
+        await updateDoc(userRef, {
+            subjects: arrayUnion({ name: subjectName, time: "00:00:00" })
+        });
+
 
         // Add click event to the new subject (modular version)
         addSubjectClickListener(newSubject, subjectName, database, userData, sanitizeEmail);
