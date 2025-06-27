@@ -1,8 +1,7 @@
 // Import Firebase SDK
-import { firestore } from "./firebase-config.js";
+import { firestore, auth } from "./firebase-config.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-const auth = getAuth(app);
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -20,7 +19,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     // Login with Firebase Auth
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
     // Optionally, fetch user profile from Firestore
     const userRef = doc(firestore, "users", email);
     const userSnap = await getDoc(userRef);
