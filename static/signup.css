@@ -87,6 +87,73 @@
     background-color: #357a38;
 }
 
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.divider span {
+    background-color: #fff;
+    padding: 0 15px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Google Sign-In Button */
+.google-signin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.google-signin-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #c1c1c1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.google-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+/* Link Styling */
+.form-container a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.form-container a:hover {
+    color: #357a38;
+    text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .form-container {
@@ -102,6 +169,10 @@
     }
 
     .form-submit {
+        font-size: 0.95rem;
+    }
+    
+    .google-signin-btn {
         font-size: 0.95rem;
     }
 }
@@ -120,6 +191,10 @@
     }
 
     .form-submit {
+        font-size: 0.9rem;
+    }
+    
+    .google-signin-btn {
         font-size: 0.9rem;
     }
 }
