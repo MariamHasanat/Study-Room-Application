@@ -4,7 +4,7 @@ import { getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-fires
 
 export function renderSubjectsAndTotalTimeLocalFirst(subjectList, totalTimeElement, emptyState, renderSubjectsAndTotalTimeFirestore, firestoreArgs) {
     const localSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
-    subjectList.innerHTML = "";
+    subjectList.innerHTML = ""; // Clear existing list
     if (localSubjects.length === 0) {
         if (emptyState) emptyState.style.display = "block";
     } else {
@@ -20,12 +20,14 @@ export function renderSubjectsAndTotalTimeLocalFirst(subjectList, totalTimeEleme
             </span>
             <span class="subject-name">${subj.name}</span>
             <span class="subject-time">${subj.time || "00:00:00"}</span>
-        `;
+            <span class="edit-time-btn material-symbols-outlined">edit</span> <span class="delete-subject-btn material-symbols-outlined">delete</span> `;
         subjectList.appendChild(li);
-        // Use the passed-in click handler
+
+        // Crucially, call the passed-in listener function *after* the element is appended to the DOM
         if (firestoreArgs && typeof firestoreArgs[2] === 'function') {
             firestoreArgs[2](li, subj.name);
         }
+
         // Calculate total time
         if (subj.time) {
             const parts = subj.time.split(":");
@@ -44,12 +46,12 @@ export function renderSubjectsAndTotalTimeLocalFirst(subjectList, totalTimeEleme
     }
 }
 
-export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTimeElement, addSubjectClickListener, formatTime, userRef, localStorage, loader, emptyState) {
+export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTimeElement, attachAllSubjectListeners, formatTime, userRef, localStorage, loader, emptyState) {
     try {
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
             const subjects = userSnap.data().subjects || [];
-            subjectList.innerHTML = "";
+            subjectList.innerHTML = ""; // Clear existing list before rendering from Firestore
             let totalMs = 0;
             subjects.forEach(subj => {
                 const li = document.createElement("li");
@@ -59,11 +61,13 @@ export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTime
                         <span class="material-symbols-outlined">play_arrow</span>
                     </span>
                     <span class="subject-name">${subj.name}</span>
-                    <span class="subject-time">${subj.time || "00:00:00"}</span>
-                `;
+                    <span class="subject-time ">${subj.time || "00:00:00"}</span>
+                    <button  class="edit-time-btn primary-style-button  ">edit</button> 
+                    <button  class="delete-subject-btn danger-style-button ">delete</button> `;
                 subjectList.appendChild(li);
-                // Use the passed-in click handler
-                addSubjectClickListener(li, subj.name);
+                // Call the passed-in listener function *after* the element is appended to the DOM
+                attachAllSubjectListeners(li, subj.name);
+
                 // Calculate total time
                 if (subj.time) {
                     const parts = subj.time.split(":");
@@ -73,7 +77,7 @@ export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTime
                     }
                 }
             });
-            // Update localStorage with latest subjects
+            // Update localStorage with latest subjects (from Firestore, which is the source of truth)
             localStorage.setItem("subjects", JSON.stringify(subjects));
             // Update total time in UI
             if (totalTimeElement) {
@@ -83,6 +87,7 @@ export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTime
             if (emptyState) emptyState.style.display = subjects.length === 0 ? "block" : "none";
         } else {
             if (emptyState) emptyState.style.display = "block";
+            localStorage.removeItem("subjects"); // Clear local if no subjects in Firestore
         }
     } catch (error) {
         console.error("Error fetching subjects from Firestore:", error);
