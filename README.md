@@ -1,22 +1,25 @@
-🗑️ Feature: Remove Subject
-We have implemented a "Remove Subject" feature that allows users to delete any subject they no longer need from their study list.
+🗑️ Remove Subject Feature
+✅ Overview
+A "Remove Subject" feature has been added to allow users to delete subjects they no longer wish to track.
 
 🔧 How It Works
-Each subject item now includes a delete (🗑️) button next to it.
+Each subject item now includes a small delete button 🗑️ positioned next to it.
 
-When the user clicks the delete button:
+When the user clicks this button:
 
-A confirmation popup appears to prevent accidental deletion.
+A confirmation dialog appears to prevent accidental deletion.
 
-If confirmed:
+Upon confirmation:
 
-The subject is removed from the UI.
+✅ The subject is removed from the UI.
 
-The subject is deleted from Firestore under the current user's document.
+✅ The subject is deleted from Firestore (under the current user).
 
-The subject is also removed from localStorage to keep the data in sync.
+✅ The subject is also removed from localStorage for consistency.
 
-If the deleted subject was the last one, the "empty state" message or image will reappear to indicate there are no subjects added.
+If it was the last subject, the empty state message is shown again.
 
 💡 Why This Feature?
-This feature improves the user experience by giving users more control over their data, allowing them to clean up and manage their subjects list as their study needs change.
+This feature enhances the user experience by giving users full control over their study list.
+It helps them stay organized by removing irrelevant or outdated subjects as their study priorities change.
+
