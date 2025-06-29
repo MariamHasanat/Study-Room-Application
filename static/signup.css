@@ -123,3 +123,37 @@
         font-size: 0.9rem;
     }
 }
+
+
+.google-signin-button {
+    
+    display: flex; /* Use flexbox for easy alignment of icon and text */
+    align-items: center; /* Vertically center the items */
+    justify-content: center; /* Horizontally center the content (icon + text) */
+    background-color: #4285F4; /* Google blue */
+    color: white; /* White text */
+    border: none; /* Remove default button border */
+    border-radius: 4px; /* Slightly rounded corners */
+    padding: 10px 20px; /* Padding inside the button */
+    font-size: 16px; /* Adjust font size as needed */
+    font-family: Arial, sans-serif; /* A common, clean font */
+    cursor: pointer; /* Indicate it's clickable */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+    width: fit-content; /* Make the button only as wide as its content */
+    margin: 0 auto; /* Center the button if it's within a block container */
+    padding: 10px 114px;
+}
+
+.google-signin-button:hover {
+    background-color: #357ae8; /* Slightly darker blue on hover */
+}
+
+.google-icon {
+    width: 18px; /* Size of the Google G icon */
+    height: 18px; /* Ensure aspect ratio is maintained */
+    margin-right: 10px; /* Space between the icon and the text */
+    background-color: white; /* White background for the 'G' icon */
+    border-radius: 2px; /* Slight border-radius for the icon's background */
+    padding: 2px; /* Padding inside the icon background */
+}

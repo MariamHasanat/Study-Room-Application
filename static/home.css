@@ -231,6 +231,8 @@ button[type="button"]:hover {
 
 .nav-header li a {
     text-decoration: none;
+    
+    
     color: white;
     font-size: 1rem;
     padding: 10px 15px;
@@ -395,3 +397,137 @@ button[type="button"]:hover {
         margin-right: 4px;
     }
 }
+
+/* هذا لزر "Primary" جديد بالكامل */
+.primary-button {
+    background-color: #007bff; /* لون أزرق */
+    color: white; /* نص أبيض */
+    padding: 10px 20px; /* مسافة داخلية */
+    border: none; /* إزالة الحدود الافتراضية */
+    border-radius: 5px; /* حواف دائرية */
+    cursor: pointer; /* مؤشر اليد عند المرور فوق الزر */
+    font-size: 16px; /* حجم الخط */
+    font-family: sans-serif; /* نوع الخط */
+    display: inline-block; /* لضمان أن ال padding يعمل بشكل صحيح */
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* تأثير الانتقال عند التفاعل */
+}
+
+.primary-button:hover {
+    background-color: #0056b3; /* لون أزرق أغمق عند التمرير */
+}
+
+/* هذا إذا كنت تريد تطبيق نمط "Primary" على الأزرار الموجودة */
+.primary-style-button {
+    background-color: #007bff; /* لون أزرق */
+    color: white; /* نص أبيض */
+    padding: 8px 15px; /* مسافة داخلية أقل للأزرار الصغيرة */
+    border: none; /* إزالة الحدود الافتراضية */
+    border-radius: 5px; /* حواف دائرية */
+    cursor: pointer; /* مؤشر اليد عند المرور فوق الزر */
+    font-size: 14px; /* حجم الخط */
+    font-family: sans-serif; /* نوع الخط */
+    display: inline-flex; /* لترتيب الأيقونات والنص بشكل جيد */
+    align-items: center; /* لمحاذاة العناصر عموديا */
+    justify-content: center; /* لمحاذاة العناصر أفقيا */
+    transition: background-color 0.3s ease;
+    margin-left: 5px; /* مسافة صغيرة بين الأزرار */
+}
+
+.primary-style-button:hover {
+    background-color: #0056b3;
+}
+
+/* تعديل بسيط لـ Material Symbols إذا كنت تستخدمها داخل الزر وتود أن تكون بيضاء */
+.primary-style-button .material-symbols-outlined {
+    color: white; /* تأكد من أن لون الأيقونة أبيض */
+    font-size: 18px; /* حجم الأيقونة */
+    margin-right: 5px; /* مسافة بين الأيقونة والنص إذا وجد */
+}
+
+
+/* هذا لزر "Danger" جديد بالكامل */
+.danger-button {
+    background-color: #dc3545; /* لون أحمر */
+    color: white; /* نص أبيض */
+    padding: 10px 20px; /* مسافة داخلية */
+    border: none; /* إزالة الحدود الافتراضية */
+    border-radius: 5px; /* حواف دائرية */
+    cursor: pointer; /* مؤشر اليد عند المرور فوق الزر */
+    font-size: 16px; /* حجم الخط */
+    font-family: sans-serif; /* نوع الخط */
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* مسافة صغيرة بين الأزرار إذا كان بجانب Primary */
+}
+
+.danger-button:hover {
+    background-color: #c82333; /* لون أحمر أغمق عند التمرير */
+}
+
+/* هذا إذا كنت تريد تطبيق نمط "Danger" على الأزرار الموجودة */
+.danger-style-button {
+    background-color: #dc3545; /* لون أحمر */
+    color: white; /* نص أبيض */
+    padding: 8px 15px; /* مسافة داخلية أقل للأزرار الصغيرة */
+    border: none; /* إزالة الحدود الافتراضية */
+    border-radius: 5px; /* حواف دائرية */
+    cursor: pointer; /* مؤشر اليد عند المرور فوق الزر */
+    font-size: 14px; /* حجم الخط */
+    font-family: sans-serif; /* نوع الخط */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    margin-left: 5px; /* مسافة صغيرة بين الأزرار */
+}
+
+.danger-style-button:hover {
+    background-color: #c82333;
+}
+
+/* تعديل بسيط لـ Material Symbols إذا كنت تستخدمها داخل الزر وتود أن تكون بيضاء */
+.danger-style-button .material-symbols-outlined {
+    color: white; /* تأكد من أن لون الأيقونة أبيض */
+    font-size: 18px; /* حجم الأيقونة */
+    margin-right: 5px; /* مسافة بين الأيقونة والنص إذا وجد */
+}
+
+
+.subject-time {
+    font-family: 'Montserrat', sans-serif; /* خط حديث وجميل، تأكد من استيراده إذا لم يكن لديك */
+    font-size: 1.2em; /* حجم أكبر قليلاً */
+    font-weight: bold; /* خط سميك */
+    color: #4CAF50; /* لون أخضر جذاب (يمكنك تغيير هذا اللون) */
+    background-color: #f0f8ff; /* خلفية خفيفة جداً لمزيد من التباين */
+    padding: 5px 10px; /* مسافة داخلية */
+    border-radius: 5px; /* حواف دائرية خفيفة */
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* ظل خفيف لإعطاء عمق */
+    margin-left: 10px; /* مسافة عن العنصر السابق */
+    display: inline-block; /* لضمان أن ال padding وال shadow يعملان */
+    min-width: 90px; /* لضمان عرض ثابت للوقت حتى لو كان قصيراً */
+    text-align: center; /* لمحاذاة الوقت في المنتصف */
+}
+
+
+.subject-time.neon {
+    font-family: 'Orbitron', sans-serif; /* خط مستقبلي، استورده من Google Fonts */
+    font-size: 1.5em; /* حجم أكبر */
+    font-weight: bold;
+    color: #00FFFF; /* لون نيون سماوي */
+    text-shadow:
+        0 0 5px #00FFFF,
+        0 0 10px #00FFFF,
+        0 0 20px #00FFFF,
+        0 0 40px #00FFFF,
+        0 0 80px #00FFFF; /* ظلال متعددة لتأثير الوهج */
+    background: none; /* إزالة الخلفية */
+    border: none; /* إزالة الحدود */
+    padding: 0; /* إزالة المسافة الداخلية */
+    /* قد تحتاج إلى ضبط margin-left للحفاظ على التخطيط */
+    min-width: auto; /* إزالة العرض الأدنى إذا كان غير مناسب */
+}
+
