@@ -1,43 +1,98 @@
 // Import Firebase SDK
-import { firestore } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { firestore, auth } from "./firebase-config.js"; // Make sure 'auth' is imported here
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js"; // These are essential for Google Sign-In
 
-// Form submission handler
+// --- Existing Email/Password Login (Highly Insecure - Migrate to Firebase Auth) ---
 document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault(); // Prevent page reload
+    e.preventDefault();
 
-  // Collect user input
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-  // Validate input
-  if (!email || !password) {
-    alert("Both fields are required.");
-    return;
-  }
-
-  try {
-    // Retrieve user data from Firestore
-    const userRef = doc(firestore, "users", email);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      alert("User not found. Please check your email.");
-      return;
+    if (!email || !password) {
+        alert("Both fields are required.");
+        return;
     }
 
-    const userData = userSnap.data();
+    try {
+        // This manual password check is NOT secure. For a real app, use:
+        // await signInWithEmailAndPassword(auth, email, password);
+        const userRef = doc(firestore, "users", email);
+        const userSnap = await getDoc(userRef);
 
-    // Check if password matches (You should use Firebase Auth for real apps)
-    if (password === userData.password) {
-      alert("Login successful!");
-      localStorage.setItem('userName', JSON.stringify(userData));
-      window.location.href = "../pages/home.html"; // Redirect to home page
-    } else {
-      alert("Incorrect password. Please try again.");
+        if (!userSnap.exists()) {
+            alert("User not found. Please check your email.");
+            return;
+        }
+
+        const userData = userSnap.data();
+
+        // This password comparison is insecure.
+        if (password === userData.password) {
+            alert("Login successful!");
+            localStorage.setItem('userName', JSON.stringify(userData));
+            window.location.href = "../pages/home.html";
+        } else {
+            alert("Incorrect password. Please try again.");
+        }
+    } catch (error) {
+        console.error("Error during manual login:", error);
+        alert("Failed to login. Please try again.");
     }
-  } catch (error) {
-    console.error("Error retrieving document: ", error);
-    alert("Failed to login. Please try again.");
-  }
 });
+
+// --- Google Sign-In Implementation ---
+const googleSignInBtn = document.getElementById("google-signin-btn");
+
+if (googleSignInBtn) {
+    googleSignInBtn.addEventListener("click", async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider); // Use the imported 'auth' instance
+            const user = result.user; // The signed-in user object
+
+            // Check if this Google user exists in your Firestore 'users' collection
+            const userRef = doc(firestore, "users", user.email);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                // If the user doesn't exist in Firestore, create their document
+                await setDoc(userRef, {
+                    name: user.displayName || user.email.split('@')[0], // Use Google display name, or part of email
+                    email: user.email,
+                    createdAt: new Date().toISOString(),
+                    subjects: [] // Initialize subjects for new Google users
+                });
+                // Update local storage with the newly created user data
+                localStorage.setItem('userName', JSON.stringify({
+                    name: user.displayName || user.email.split('@')[0],
+                    email: user.email
+                }));
+            } else {
+                // If the user exists, just update local storage with their existing data
+                localStorage.setItem('userName', JSON.stringify({
+                    name: userSnap.data().name, // Use name from Firestore if available
+                    email: user.email
+                }));
+            }
+
+            alert("Login successful with Google!");
+            window.location.href = "../pages/home.html"; // Redirect to home page
+
+        } catch (error) {
+            console.error("Error during Google Sign-In:", error);
+            // Provide user-friendly error messages based on Firebase error codes
+            if (error.code === 'auth/popup-closed-by-user') {
+                alert("Google Sign-In was cancelled or the popup was closed.");
+            } else if (error.code === 'auth/cancelled-popup-request') {
+                alert("Google Sign-In popup was already open. Please try again.");
+            } else if (error.code === 'auth/operation-not-allowed') {
+                alert("Google Sign-In is not enabled for this Firebase project. Please check your Firebase console.");
+            }
+            else {
+                alert(`Failed to sign in with Google: ${error.message}. Please try again.`);
+            }
+        }
+    });
+}

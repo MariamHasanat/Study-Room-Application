@@ -611,3 +611,77 @@ section#contact {
         font-size: 0.9rem;
     }
 }
+
+/* Add this to your style.css for the Google button appearance */
+.google-signin-button {
+    background-color: #4285F4; /* Google Blue */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
+    margin-top: 15px; /* Adjust spacing as needed */
+    width: 100%; /* Make it full width of its container */
+    max-width: 300px; /* Limit max width for better aesthetics */
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.25);
+    transition: background-color 0.3s ease;
+}
+
+.google-signin-button:hover {
+    background-color: #357ae8;
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Styles for delete and edit icons */
+.subject-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* To push icons to the right */
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.subject-info .color,
+.subject-info .subject-name,
+.subject-info .subject-time {
+    flex-shrink: 0; /* Prevent these from shrinking */
+}
+
+.subject-info .subject-name {
+    flex-grow: 1; /* Allow subject name to take available space */
+    margin-right: 10px; /* Space between name and time */
+}
+
+.subject-info .subject-time {
+    margin-right: 10px; /* Space between time and icons */
+}
+
+.subject-info .delete-subject-btn,
+.subject-info .edit-time-btn {
+    cursor: pointer;
+    margin-left: 8px; /* Space between icons */
+    font-size: 20px; /* Adjust size as needed */
+    color: #ff4d4f; /* Red for delete */
+    transition: color 0.2s ease-in-out;
+}
+
+.subject-info .edit-time-btn {
+    color: #1890ff; /* Blue for edit */
+}
+
+.subject-info .delete-subject-btn:hover {
+    color: #d9363e;
+}
+
+.subject-info .edit-time-btn:hover {
+    color: #096dd9;
+}
