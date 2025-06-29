@@ -30,13 +30,20 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     // Add user info to Firestore
-    const userRef = doc(firestore, "users", email); // Use email as a unique document ID
-    await setDoc(userRef, {
+    const userRef=doc(firestore,"users",email);
+    await setDoc(userRef,{
       name,
       email,
       password,
-      createdAt: new Date().toISOString()
+      createdAt:new Date().toISOString()
     });
+    // const userRef = doc(firestore, "users", email); // Use email as a unique document ID
+    // await setDoc(userRef, {
+    //   name,
+    //   email,
+    //   password,
+    //   createdAt: new Date().toISOString()
+    // });
 
     alert("Account created successfully.");
     window.location.href = "../pages/login.html"; // Redirect to login page

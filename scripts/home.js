@@ -1,11 +1,12 @@
 // Import Firebase SDK
 import { firestore, database } from "./firebase-config.js";
-import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { doc,getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { renderSubjectsAndTotalTimeLocalFirst, renderSubjectsAndTotalTimeFirestore } from './subject-list.js';
 import { addSubjectClickListener } from './subject-utils.js';
 import { formatTime } from './time-utils.js';
 import { setGreeting } from './greeting.js';
 import { setupLogout } from './logout.js';
+
 
 // Load user data from local storage
 const userData = JSON.parse(localStorage.getItem("userName"));
@@ -65,19 +66,75 @@ addBtn.addEventListener("click", async () => {
         localStorage.setItem("subjects", JSON.stringify(subjects));
 
         // Update UI
-        const newSubject = document.createElement("li");
-        newSubject.className = "subject-info";
-        newSubject.innerHTML = `
-            <span class="color">
-                <span class="material-symbols-outlined">play_arrow</span>
-            </span>
-            <span class="subject-name">${subjectName}</span>
-            <span class="subject-time">00:00:00</span>
-        `;
-        subjectList.appendChild(newSubject);
+        //subject-->li
+        const subject = document.createElement("li");
+        subject.className="subject";
+        //the div that contains the div -->subject-info
+        const newSubjectInfo=document.createElement("div");
+        newSubjectInfo.className="subject-info";
+         newSubjectInfo.innerHTML = `
+    <span class="color">
+        <span class="material-symbols-outlined">play_arrow</span>
+    </span>
+    <span class="subject-name">${subjectName}</span>
+    <span class="subject-time">00:00:00</span>
+`;
+
+
+
+
+
+
+        const deleteBtnStyle = document.createElement("button");
+        deleteBtnStyle.className="delete-btn";
+deleteBtnStyle.textContent = "🗑️";
+
+    
+subject.appendChild(newSubjectInfo);
+subject.appendChild(deleteBtnStyle);
+
+
+
+
+        subjectList.appendChild(subject);
 
         // Add click event to the new subject (modular version)
-        addSubjectClickListener(newSubject, subjectName, database, userData, sanitizeEmail);
+        addSubjectClickListener(newSubjectInfo, subjectName, database, userData, sanitizeEmail);
+
+       const deleteBtn = subject.querySelector(".delete-btn");
+
+deleteBtn.addEventListener("click", async () => {
+    const confirmDelete = confirm(`Are you sure you want to delete "${subjectName}"?`);
+    if (!confirmDelete) return;
+
+    try {
+        const userRef = doc(firestore, "users", userData.email);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+
+            const userDataFirestore = userSnap.data();
+            const updatedSubjects = (userDataFirestore.subjects || []).filter(s => s.name !== subjectName);
+
+            await updateDoc(userRef, { subjects: updatedSubjects });
+
+            let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+            subjects = subjects.filter(s => s.name !== subjectName);
+            localStorage.setItem("subjects", JSON.stringify(subjects));
+
+            subject.remove();
+
+            // const emptyState = document.getElementById("empty-state");
+            // if (subjects.length === 0 && emptyState) {
+            //     emptyState.style.display = "block";
+            // }
+        }
+    } catch (error) {
+        console.error("Error deleting subject:", error);
+        alert("Failed to delete subject.");
+    }
+});
+
 
         // Hide empty state image if visible
         const emptyState = document.getElementById("empty-state");

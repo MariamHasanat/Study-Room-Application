@@ -15,6 +15,11 @@ ul {
     padding: 0;
     margin: 0 20px;
 }
+.subject{
+    display: grid;
+    grid-template-columns: 90% 10%;
+    justify-content: center;
+}
 
 .subject-info {
     display: flex;
@@ -26,6 +31,12 @@ ul {
     border-radius: 5px;
     background-color: #f9f9f9;
     transition: box-shadow 0.3s ease;
+}
+.delete-btn{
+    background: none;
+    cursor: pointer;
+    border: none;
+    margin-left: auto;
 }
 
 .subject-info:hover {
