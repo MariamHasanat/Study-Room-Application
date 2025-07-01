@@ -1,7 +1,9 @@
 // Import Firebase SDK
 import { firestore } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
+import { doc, getDoc ,setDoc} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { auth } from "./firebase-config.js";
+import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+document.getElementById("google-login-btn").addEventListener("click", signInWithGoogle);
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault(); // Prevent page reload
@@ -41,3 +43,34 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     alert("Failed to login. Please try again.");
   }
 });
+function signInWithGoogle() {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+    .then(async (result) => {
+      const user = result.user;
+      // Check if user exists in Firestore
+      const userRef = doc(firestore, "users", user.email);
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()) {
+        // Add user to Firestore
+        await setDoc(userRef, {
+          email: user.email,
+          name: user.displayName,
+          photoURL: user.photoURL,
+          createdAt: new Date().toISOString(),
+          subjects: []
+        });
+      }
+      alert("Google login successful! Welcome, " + user.displayName);
+      localStorage.setItem('userName', JSON.stringify({
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL
+      }));
+      window.location.href = "../pages/home.html";
+    })
+    .catch((error) => {
+      console.error("Google sign-in error:", error);
+      alert("Google login failed. Please try again.");
+    });
+}

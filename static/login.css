@@ -81,8 +81,11 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: .5rem;
 }
-
+.google-submit {
+    background-color: #4285F4;
+}
 .form-submit:hover {
     background-color: #357a38;
 }

@@ -8,13 +8,22 @@ import { setGreeting } from './greeting.js';
 import { setupLogout } from './logout.js';
 
 // Load user data from local storage
-const userData = JSON.parse(localStorage.getItem("userName"));
+/* const userData = JSON.parse(localStorage.getItem("userName"));
 if (!userData || !userData.name || !userData.email) {
     window.location.href = "../pages/login.html";
 }
 const heading = document.querySelector(".user-name");
-if (heading) heading.innerHTML = userData.name;
-
+if (heading) heading.innerHTML = userData.name; */
+const userData = JSON.parse(localStorage.getItem("userName"));
+if (
+    !userData ||
+    (!userData.name && !userData.displayName) ||
+    !userData.email
+) {
+    window.location.href = "../pages/login.html";
+}
+const heading = document.querySelector(".user-name");
+if (heading) heading.innerHTML = userData.name || userData.displayName;
 // Greeting logic
 const greetingDiv = document.querySelector(".header-greeting");
 setGreeting(greetingDiv, userData);
