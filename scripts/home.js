@@ -1,5 +1,5 @@
 // Import Firebase SDK
-import { firestore, database } from "./firebase-config.js";
+import { db, database } from "./firebase-config.js";
 import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { renderSubjectsAndTotalTimeLocalFirst, renderSubjectsAndTotalTimeFirestore } from './subject-list.js';
 import { addSubjectClickListener } from './subject-utils.js';
@@ -54,7 +54,7 @@ addBtn.addEventListener("click", async () => {
 
     try {
         // Update Firestore
-        const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
+        const userRef = doc(db, "users", userData.email); // Use email as the document ID
         await updateDoc(userRef, {
             subjects: arrayUnion({ name: subjectName, time: "00:00:00" })
         });
@@ -105,7 +105,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const subjectListElem = document.getElementById("subject-list");
     const totalTimeElem = document.querySelector(".total-time-value");
     const emptyStateElem = document.getElementById("empty-state");
-    const userRef = doc(firestore, "users", userData.email);
+    const userRef = doc(db, "users", userData.email);
     renderSubjectsAndTotalTimeLocalFirst(
         subjectListElem,
         totalTimeElem,

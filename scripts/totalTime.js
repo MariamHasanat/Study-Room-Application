@@ -1,10 +1,10 @@
 // scripts/totalTime.js
 // This module exports a function to update the total study time on the home page.
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { firestore } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 
 export async function updateTotalStudyTime(userEmail) {
-    const userRef = doc(firestore, "users", userEmail);
+    const userRef = doc(db, "users", userEmail);
     const userSnap = await getDoc(userRef);
     let totalMs = 0;
     if (userSnap.exists()) {

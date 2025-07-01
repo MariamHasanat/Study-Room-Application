@@ -1,6 +1,6 @@
 // Import Firebase SDK
 import { get, ref, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { firestore, database } from "./firebase-config.js";
+import { db, database } from "./firebase-config.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to sanitize email for database paths
     function sanitizeEmail(email) {
-        return email.replace(/\./g, ',');
+        return email.replace(/\. /g, ',');
     }
 
     // Timer display logic
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
                 await set(userSubjectRef, { startTime: startTime, endTime: endTime });
                 // Update Firestore subject total time
-                const userDocRef = doc(firestore, "users", userData.email);
+                const userDocRef = doc(db, "users", userData.email);
                 const userDocSnap = await getDoc(userDocRef);
                 if (userDocSnap.exists()) {
                     let subjects = userDocSnap.data().subjects || [];

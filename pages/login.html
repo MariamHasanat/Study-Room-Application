@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/login.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/login.css" />
     <script type="module" src="../scripts/login.js" defer></script>
     <title>Study Room Application</title>
-</head>
-<body class="login-body">
+  </head>
+  <body class="login-body">
     <div class="form-container">
-        <!-- Branding Section -->
-        <div class="form-header" onclick="window.location.href='../index.html'">
-            <img src="../assets/study-room-logo.png" alt="Website Logo" class="form-logo">
-            <h1 class="form-title">Study Room Application</h1>
-        </div>
+      <!-- Branding Section -->
+      <div class="form-header" onclick="window.location.href='../index.html'">
+        <img
+          src="../assets/study-room-logo.png"
+          alt="Website Logo"
+          class="form-logo"
+        />
+        <h1 class="form-title">Study Room Application</h1>
+      </div>
 
-        <!-- Form Section -->
-        <form action="post">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password">
-            </div>
-            <button type="submit" class="form-submit">Login Account</button>
-        </form>
-        <br>
-        <a href="../pages/signup.html">Don't have an account?</a>
-        <br>
+      <!-- Form Section -->
+      <form action="post">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+          />
+        </div>
+        <button type="submit" class="form-submit">Login Account</button
+        ><!-- Google Sign-In Button -->
+        <button id="google-login-btn" type="button" class="google-submit">
+          <img
+            src="../assets/icons8-google-48.png"
+            alt="Google"
+            style="width: 20px; vertical-align: middle; margin-right: 8px"
+          />
+          Sign in with Google
+        </button>
+      </form>
+      <br />
+      <a href="../pages/signup.html">Don't have an account?</a>
+      <br />
     </div>
-</body>
+  </body>
 </html>

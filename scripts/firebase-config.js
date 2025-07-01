@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-// import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { getFirestore } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import {getAuth} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAVdOLPOoPUz8PEaP2xZCA5AGxBD81_NUU",
   authDomain: "study-room-application-alaa.firebaseapp.com",
@@ -14,8 +11,11 @@ const firebaseConfig = {
   messagingSenderId: "519686424338",
   appId: "1:519686424338:web:5caf1c4a302a5f4a4955cb",
   measurementId: "G-SPJBY7ZHPM",
+  databaseURL: "https://study-room-application-alaa-default-rtdb.firebaseio.com/"
 };
 
-// Initialize Firebase
+
 export const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+export const db = getFirestore(app);
+export const database = getDatabase(app);
+export const auth = getAuth(app);
