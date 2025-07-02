@@ -127,3 +127,4 @@ window.addEventListener("DOMContentLoaded", () => {
 // Logout logic
 const logoutBtn = document.getElementById("logout-btn");
 setupLogout(logoutBtn);
+

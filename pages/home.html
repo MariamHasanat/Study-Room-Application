@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/home.css">
-    <script type="module" src="../scripts/home.js" defer></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&icon_names=play_arrow" />
     <title>Study Room Application</title>
@@ -35,8 +34,11 @@
         <div class="header-actions">
             <button id="add-subject-btn" type="button">+ Subject</button>
             <div class="total-time">
+                
                 <div>Total Study Time</div>
+                
                 <span class="total-time-value">00:00:00</span>
+
             </div>
         </div>
         <ul id="subject-list">
@@ -44,6 +46,7 @@
         <div id="empty-state" style="display:none; text-align:center; margin: 30px 0;">
             <img src="../assets/books.svg" alt="No subjects"
                 style="width:250px;max-width:60vw;opacity:0.7;display:block;margin:0 auto 10px auto;" />
+                
         </div>
 
         <!-- Overlay background -->
@@ -83,6 +86,8 @@
             </div>
         </div>
     </footer>
+        <script type="module" src="../scripts/home.js" defer></script>
+
 </body>
 
 </html>
