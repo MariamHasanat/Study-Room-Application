@@ -1,9 +1,15 @@
 // Import Firebase SDK
 import { firestore } from "./firebase-config.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import {
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { auth } from "./firebase-config.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
+  console.log("i am in form");
   e.preventDefault(); // Prevent page reload
 
   // Collect user input
@@ -23,25 +29,38 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     return;
   }
 
-  if (password.length < 4 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
-    alert("Password must be at least 4 characters long and include uppercase, lowercase, and a number.");
+  if (
+    password.length < 4 ||
+    !/[A-Z]/.test(password) ||
+    !/[a-z]/.test(password) ||
+    !/[0-9]/.test(password)
+  ) {
+    alert(
+      "Password must be at least 4 characters long and include uppercase, lowercase, and a number."
+    );
     return;
   }
 
   try {
-    // Add user info to Firestore
+    // Create user with Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // Add user info to Firestore (without password)
     const userRef = doc(firestore, "users", email); // Use email as a unique document ID
     await setDoc(userRef, {
       name,
       email,
-      password,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      subjects: [],
     });
 
     alert("Account created successfully.");
     window.location.href = "../pages/login.html"; // Redirect to login page
   } catch (error) {
-    console.error("Error adding document: ", error);
-    alert("Failed to create account. Please try again.");
+    console.error("Error creating user:", error);
+    alert(error.message || "Failed to create account. Please try again.");
   }
 });
