@@ -1,0 +1,34 @@
+# Google Authentication with Firebase
+
+This project integrates **Google Sign-In** using **Firebase Authentication** to allow users to securely log in using their Google accounts.
+
+---
+
+## Features
+
+- Sign in with Google account
+- Secure OAuth 2.0 flow
+- Session-based login with Firebase
+- Auto-redirect after login
+- Works with Vanilla JS or frameworks like React
+
+---
+
+
+
+
+###  Create Firebase Project
+
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Click **"Add Project"**
+3. Give it a name and follow the setup wizard
+
+---
+
+### 2. Enable Google Sign-In
+
+1. In Firebase Console → **Authentication** → **Sign-in method**
+2. Enable **Google**
+3. Set a **project support email**
+
+---
