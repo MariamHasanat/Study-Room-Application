@@ -1,6 +1,8 @@
 // Import Firebase SDK
 import { firestore } from "./firebase-config.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { auth, provider } from './firebase-config.js';
+import { signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -40,4 +42,16 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     console.error("Error retrieving document: ", error);
     alert("Failed to login. Please try again.");
   }
+});
+ 
+document.getElementById("google-btn").addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      console.log("Login successful!", user.displayName);
+      window.location.href = "../pages/home.html";
+    })
+    .catch((error) => {
+      console.error("Login failed!", error);
+    });
 });
