@@ -1,6 +1,8 @@
 // Import Firebase SDK
-import { firestore } from "./firebase-config.js";
+import { firestore, auth } from "./firebase-config.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+import { setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
