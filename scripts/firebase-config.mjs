@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { process as x } from "./secrets.env.mjs";
+import { process } from "./secrets.env.mjs";
 import {
     getAuth,
     GoogleAuthProvider,
@@ -10,13 +10,13 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: x.env.FIREBASE_API_KEY,
-    authDomain: x.env.FIREBASE_AUTH_DOMAIN,
-    projectId: x.env.FIREBASE_PROJECT_ID,
-    storageBucket: x.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: x.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: x.env.FIREBASE_APP_ID,
-    databaseURL: x.env.FIREBASE_DATABASE_URL,
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
 };
 
 // Initialize Firebase
