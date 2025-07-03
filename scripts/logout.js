@@ -1,4 +1,4 @@
-import { auth } from "./firebase-config.mjs";
+import { auth } from "./firebase-config.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 // Logout logic
 export function setupLogout(logoutBtn) {

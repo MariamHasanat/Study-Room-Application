@@ -1,5 +1,5 @@
 // Import Firebase SDK
-import { firestore, database } from "./firebase-config.mjs";
+import { firestore, database } from "./firebase-config.js";
 import {
     doc,
     updateDoc,
@@ -9,7 +9,7 @@ import {
     renderSubjectsAndTotalTimeLocalFirst,
     renderSubjectsAndTotalTimeFirestore,
 } from "./subject-list.js";
-import { addSubjectClickListener } from "./subject-utils.mjs";
+import { addSubjectClickListener } from "./subject-utils.js";
 import { formatTime } from "./time-utils.js";
 import { setGreeting } from "./greeting.js";
 import { setupLogout } from "./logout.js";

@@ -4,7 +4,7 @@ import {
     ref,
     set,
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { firestore, database } from "./firebase-config.mjs";
+import { firestore, database } from "./firebase-config.js";
 import {
     doc,
     getDoc,

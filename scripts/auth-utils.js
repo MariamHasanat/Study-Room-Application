@@ -1,4 +1,4 @@
-import { auth, provider, firestore } from "./firebase-config.mjs";
+import { auth, provider, firestore } from "./firebase-config.js";
 import {
     doc,
     setDoc,
