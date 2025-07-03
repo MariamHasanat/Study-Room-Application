@@ -1,8 +1,15 @@
 // Import Firebase SDK
-import { get, ref, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { firestore, database } from "./firebase-config.js";
-import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
+import {
+    get,
+    ref,
+    set,
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { firestore, database } from "./firebase-config.mjs";
+import {
+    doc,
+    getDoc,
+    updateDoc,
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     // Show loader immediately
@@ -10,19 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loader) loader.classList.add("active");
 
     // Load user data from local storage
-    const userData = JSON.parse(localStorage.getItem("userName"));
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const heading = document.querySelector(".user-name");
-    if (heading && userData && userData.name) heading.innerHTML = userData.name;
+    if (heading && currentUser) heading.innerHTML = currentUser.displayName;
 
     // Greeting logic
     const greetingDiv = document.querySelector(".header-greeting");
-    if (greetingDiv && userData && userData.name) {
+    if (greetingDiv && currentUser) {
         const hour = new Date().getHours();
         let greet = "Hello";
         if (hour < 12) greet = "Good morning";
         else if (hour < 18) greet = "Good afternoon";
         else greet = "Good evening";
-        greetingDiv.textContent = `${greet}, ${userData.name} 👋🏆!`;
+        greetingDiv.textContent = `${greet}, ${currentUser.displayName} 👋🏆!`;
     }
 
     // Parse URL parameters to extract subject name
@@ -31,7 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Display subject title
     const subjectTitleElement = document.getElementById("subject-title");
-    if (subjectTitleElement) subjectTitleElement.textContent = subjectName || "Unknown Subject";
+    if (subjectTitleElement)
+        subjectTitleElement.textContent = subjectName || "Unknown Subject";
 
     // Timer Variables
     let startTime = Date.now();
@@ -42,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to sanitize email for database paths
     function sanitizeEmail(email) {
-        return email.replace(/\./g, ',');
+        return email.replace(/\./g, ",");
     }
 
     // Timer display logic
@@ -52,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
             timerInterval = setInterval(() => {
                 if (!window.timerShouldRun) return;
                 const elapsedTime = Date.now() - startTime;
-                if (studyTimerElement) studyTimerElement.textContent = formatTime(elapsedTime);
+                if (studyTimerElement)
+                    studyTimerElement.textContent = formatTime(elapsedTime);
             }, 1000);
         }
     }
@@ -60,9 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Get start time from Realtime Database when the page loads
     (async () => {
         try {
-            const safeEmail = sanitizeEmail(userData.email);
-            const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
+            const safeEmail = sanitizeEmail(currentUser.email);
+            const userSubjectRef = ref(
+                database,
+                `users/${safeEmail}/subjects/${subjectName}`
+            );
             const snapshot = await get(userSubjectRef);
+            console.log(snapshot.val());
+
             if (snapshot.exists() && snapshot.val().startTime) {
                 startTime = Number(snapshot.val().startTime);
                 if (isNaN(startTime)) startTime = Date.now();
@@ -70,7 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 startTime = Date.now();
             }
         } catch (error) {
-            console.error("Error getting start time from Realtime Database: ", error);
+            console.error(
+                "Error getting start time from Realtime Database: ",
+                error
+            );
             startTime = Date.now();
         }
         // Hide loader after timer is ready and timer display starts
@@ -82,7 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function msToTimeString(ms) {
         const totalSeconds = Math.floor(ms / 1000);
         const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+            2,
+            "0"
+        );
         const seconds = String(totalSeconds % 60).padStart(2, "0");
         return `${hours}:${minutes}:${seconds}`;
     }
@@ -105,10 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // Update localStorage instantly
         let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
-        subjects = subjects.map(subj => {
+        subjects = subjects.map((subj) => {
             if (subj.name === subjectName) {
-                const prev = subj.time ? subj.time.split(":") : ["00","00","00"];
-                const prevMs = (+prev[0])*3600000 + (+prev[1])*60000 + (+prev[2])*1000;
+                const prev = subj.time
+                    ? subj.time.split(":")
+                    : ["00", "00", "00"];
+                const prevMs =
+                    +prev[0] * 3600000 + +prev[1] * 60000 + +prev[2] * 1000;
                 const sessionDuration = endTime - startTime;
                 const newMs = prevMs + sessionDuration;
                 return { ...subj, time: msToTimeString(newMs) };
@@ -119,18 +142,29 @@ document.addEventListener("DOMContentLoaded", () => {
         // Perform DB updates, then redirect
         (async () => {
             try {
-                const safeEmail = sanitizeEmail(userData.email);
-                const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
-                await set(userSubjectRef, { startTime: startTime, endTime: endTime });
+                const safeEmail = sanitizeEmail(currentUser.email);
+                const userSubjectRef = ref(
+                    database,
+                    `users/${safeEmail}/subjects/${subjectName}`
+                );
+                await set(userSubjectRef, {
+                    startTime: startTime,
+                    endTime: endTime,
+                });
                 // Update Firestore subject total time
-                const userDocRef = doc(firestore, "users", userData.email);
+                const userDocRef = doc(firestore, "users", currentUser.uid);
                 const userDocSnap = await getDoc(userDocRef);
                 if (userDocSnap.exists()) {
                     let subjects = userDocSnap.data().subjects || [];
-                    subjects = subjects.map(subj => {
+                    subjects = subjects.map((subj) => {
                         if (subj.name === subjectName) {
-                            const prev = subj.time ? subj.time.split(":") : ["00","00","00"];
-                            const prevMs = (+prev[0])*3600000 + (+prev[1])*60000 + (+prev[2])*1000;
+                            const prev = subj.time
+                                ? subj.time.split(":")
+                                : ["00", "00", "00"];
+                            const prevMs =
+                                +prev[0] * 3600000 +
+                                +prev[1] * 60000 +
+                                +prev[2] * 1000;
                             const sessionDuration = endTime - startTime;
                             const newMs = prevMs + sessionDuration;
                             return { ...subj, time: msToTimeString(newMs) };
@@ -143,7 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (loader) loader.style.display = "none";
                 window.location.href = "../pages/home.html";
             } catch (error) {
-                console.error("Error storing end time in Realtime Database or updating Firestore: ", error);
+                console.error(
+                    "Error storing end time in Realtime Database or updating Firestore: ",
+                    error
+                );
                 if (loader) loader.style.display = "none";
                 window.location.href = "../pages/home.html";
             }

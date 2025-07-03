@@ -9,24 +9,23 @@ import {
     renderSubjectsAndTotalTimeLocalFirst,
     renderSubjectsAndTotalTimeFirestore,
 } from "./subject-list.js";
-import { addSubjectClickListener } from "./subject-utils.js";
+import { addSubjectClickListener } from "./subject-utils.mjs";
 import { formatTime } from "./time-utils.js";
 import { setGreeting } from "./greeting.js";
 import { setupLogout } from "./logout.js";
 
 // Load user data from local storage
-const userData = JSON.parse(localStorage.getItem("userName"));
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if (!userData || !currentUser || !userData.name || !userData.email) {
+if (!currentUser) {
     window.location.href = "../pages/login.html";
 }
 
 const heading = document.querySelector(".user-name");
-if (heading) heading.innerHTML = userData.name;
+if (heading) heading.innerHTML = currentUser.displayName;
 
 // Greeting logic
 const greetingDiv = document.querySelector(".header-greeting");
-setGreeting(greetingDiv, userData);
+setGreeting(greetingDiv, { name: currentUser.displayName });
 
 // DOM Elements
 const addSubjectBtn = document.getElementById("add-subject-btn");
@@ -65,7 +64,7 @@ addBtn.addEventListener("click", async () => {
 
     try {
         // Update Firestore
-        const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
+        const userRef = doc(firestore, "users", currentUser.uid); // Use email as the document ID
         await updateDoc(userRef, {
             subjects: arrayUnion({ name: subjectName, time: "00:00:00" }),
         });
@@ -92,7 +91,6 @@ addBtn.addEventListener("click", async () => {
             newSubject,
             subjectName,
             database,
-            userData,
             sanitizeEmail
         );
 
@@ -121,7 +119,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const subjectListElem = document.getElementById("subject-list");
     const totalTimeElem = document.querySelector(".total-time-value");
     const emptyStateElem = document.getElementById("empty-state");
-    const userRef = doc(firestore, "users", userData.email);
+    const userRef = doc(firestore, "users", currentUser.uid);
     renderSubjectsAndTotalTimeLocalFirst(
         subjectListElem,
         totalTimeElem,
@@ -131,13 +129,7 @@ window.addEventListener("DOMContentLoaded", () => {
             subjectListElem,
             totalTimeElem,
             (li, name) =>
-                addSubjectClickListener(
-                    li,
-                    name,
-                    database,
-                    userData,
-                    sanitizeEmail
-                ),
+                addSubjectClickListener(li, name, database, sanitizeEmail),
             formatTime,
             userRef,
             localStorage,
