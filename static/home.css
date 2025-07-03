@@ -395,3 +395,32 @@ button[type="button"]:hover {
         margin-right: 4px;
     }
 }
+
+
+.delete-btn {
+    margin-left: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+
+.edit-btn {
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.edit-btn:hover {
+    background-color: #357a38;
+}
+
