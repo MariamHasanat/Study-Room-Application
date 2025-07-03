@@ -1,17 +1,26 @@
 // Import Firebase SDK
-import { firestore, database } from "./firebase-config.js";
-import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-import { renderSubjectsAndTotalTimeLocalFirst, renderSubjectsAndTotalTimeFirestore } from './subject-list.js';
-import { addSubjectClickListener } from './subject-utils.js';
-import { formatTime } from './time-utils.js';
-import { setGreeting } from './greeting.js';
-import { setupLogout } from './logout.js';
+import { firestore, database } from "./firebase-config.mjs";
+import {
+    doc,
+    updateDoc,
+    arrayUnion,
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import {
+    renderSubjectsAndTotalTimeLocalFirst,
+    renderSubjectsAndTotalTimeFirestore,
+} from "./subject-list.js";
+import { addSubjectClickListener } from "./subject-utils.js";
+import { formatTime } from "./time-utils.js";
+import { setGreeting } from "./greeting.js";
+import { setupLogout } from "./logout.js";
 
 // Load user data from local storage
 const userData = JSON.parse(localStorage.getItem("userName"));
-if (!userData || !userData.name || !userData.email) {
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if (!userData || !currentUser || !userData.name || !userData.email) {
     window.location.href = "../pages/login.html";
 }
+
 const heading = document.querySelector(".user-name");
 if (heading) heading.innerHTML = userData.name;
 
@@ -45,7 +54,9 @@ formOverlay.addEventListener("click", () => {
 
 // Add Subject Functionality
 addBtn.addEventListener("click", async () => {
-    const subjectName = document.getElementById("subject-name-input").value.trim();
+    const subjectName = document
+        .getElementById("subject-name-input")
+        .value.trim();
 
     if (!subjectName) {
         alert("Please enter a subject name.");
@@ -56,7 +67,7 @@ addBtn.addEventListener("click", async () => {
         // Update Firestore
         const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
         await updateDoc(userRef, {
-            subjects: arrayUnion({ name: subjectName, time: "00:00:00" })
+            subjects: arrayUnion({ name: subjectName, time: "00:00:00" }),
         });
 
         // Update Local Storage
@@ -77,7 +88,13 @@ addBtn.addEventListener("click", async () => {
         subjectList.appendChild(newSubject);
 
         // Add click event to the new subject (modular version)
-        addSubjectClickListener(newSubject, subjectName, database, userData, sanitizeEmail);
+        addSubjectClickListener(
+            newSubject,
+            subjectName,
+            database,
+            userData,
+            sanitizeEmail
+        );
 
         // Hide empty state image if visible
         const emptyState = document.getElementById("empty-state");
@@ -87,7 +104,6 @@ addBtn.addEventListener("click", async () => {
         document.getElementById("subject-name-input").value = "";
         addSubjectForm.classList.add("hidden");
         formOverlay.style.display = "none";
-
     } catch (error) {
         console.error("Error adding subject to Firestore: ", error);
         alert("Failed to add subject. Please try again.");
@@ -95,7 +111,7 @@ addBtn.addEventListener("click", async () => {
 });
 
 function sanitizeEmail(email) {
-    return email.replace(/\./g, ',');
+    return email.replace(/\./g, ",");
 }
 
 // Fetch and render subjects from localStorage first, then Firestore
@@ -114,12 +130,19 @@ window.addEventListener("DOMContentLoaded", () => {
         [
             subjectListElem,
             totalTimeElem,
-            (li, name) => addSubjectClickListener(li, name, database, userData, sanitizeEmail),
+            (li, name) =>
+                addSubjectClickListener(
+                    li,
+                    name,
+                    database,
+                    userData,
+                    sanitizeEmail
+                ),
             formatTime,
             userRef,
             localStorage,
             loader,
-            emptyStateElem
+            emptyStateElem,
         ]
     );
 });
