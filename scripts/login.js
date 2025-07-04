@@ -1,6 +1,6 @@
 // Import Firebase SDK
 import { firestore } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { auth, provider } from './firebase-config.js';
 import { signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
@@ -44,14 +44,47 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   }
 });
  
-document.getElementById("google-btn").addEventListener("click", () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      console.log("Login successful!", user.displayName);
-      window.location.href = "../pages/home.html";
-    })
-    .catch((error) => {
-      console.error("Login failed!", error);
+document.addEventListener("DOMContentLoaded",function(){
+  const googleBtn =document.getElementById("google-btn");
+
+  if(googleBtn){
+    googleBtn.addEventListener("click",async () =>{
+      try{
+        const result = await signInWithPopup(auth,provider);
+        const user = result.user;
+        // store user info in firestore
+        const userRef = doc(firestore,"users",user.email);
+        await setDoc(userRef,{
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createAt:new Date().toISOString()
+        },{merge:true});
+        // save data in local storage
+        localStorage.setItem('userName',JSON.stringify({
+          name:user.displayName,
+          email: user.email,
+          photoURL: user.photoURL
+        }));
+        window.location.href = "../pages/home.html";
+      }catch(error){
+        alert("Google sign-in failed: " + error.message);
+      }
     });
+  }else{
+    console.error("Google sign-in button not found in DOM.")
+  }
 });
+
+// document.getElementById("google-btn").addEventListener("click", () => {
+//   signInWithPopup(auth, provider)
+//     .then((result) => {
+//       const user = result.user;
+
+//       console.log("Login successful!", user.displayName);
+//       window.location.href = "../pages/home.html";
+//     })
+//     .catch((error) => {
+//       console.error("Login failed!", error);
+//     });
+// });
