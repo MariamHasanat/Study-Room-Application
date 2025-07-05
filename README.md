@@ -13,3 +13,6 @@
    
 - **Added Ability to Delete a Subject**
     - **Description:** Implemented functionality that allows users to remove a subject from the list or database
+
+    - **Added Ability to Edit a Subject**
+        - **Description:** Implemented functionality that allows users to modify the details of an existing subject in the list or database.
