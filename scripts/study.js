@@ -66,6 +66,47 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    const deleteSubjectBtn = document.getElementById("delete-subject-btn");
+    if (deleteSubjectBtn) {
+        deleteSubjectBtn.addEventListener("click", async () => {
+            if (confirm("Are you sure you want to delete this subject?")) {
+                try {
+                    // Remove subject from localStorage
+                    let subjects =
+                        JSON.parse(localStorage.getItem("subjects")) || [];
+                    subjects = subjects.filter(
+                        (subj) => subj.name !== subjectName
+                    );
+                    localStorage.setItem("subjects", JSON.stringify(subjects));
+
+                    // Remove subject from Realtime Database
+                    const safeEmail = sanitizeEmail(currentUser.email);
+                    const userSubjectRef = ref(
+                        database,
+                        `users/${safeEmail}/subjects/${subjectName}`
+                    );
+                    await set(userSubjectRef, null);
+
+                    // Remove subject from Firestore
+                    const userDocRef = doc(firestore, "users", currentUser.uid);
+                    const userDocSnap = await getDoc(userDocRef);
+                    if (userDocSnap.exists()) {
+                        let subjects = userDocSnap.data().subjects || [];
+                        subjects = subjects.filter(
+                            (subj) => subj.name !== subjectName
+                        );
+                        await updateDoc(userDocRef, { subjects });
+                    }
+
+                    // Redirect to home page
+                    window.location.href = "../pages/home.html";
+                } catch (error) {
+                    console.error("Error deleting subject: ", error);
+                }
+            }
+        });
+    }
+
     // Get start time from Realtime Database when the page loads
     (async () => {
         try {

@@ -141,9 +141,27 @@ article {
     cursor: pointer;
     margin-top: 20px;
     transition: background-color 0.3s ease;
+    width: 200px;
 }
 
 #stop-study-btn:hover {
+    background-color: #c0392b;
+}
+
+#delete-subject-btn {
+    font-size: 1.25rem;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    width: 200px;
+}
+
+#delete-subject-btn:hover {
     background-color: #c0392b;
 }
 
