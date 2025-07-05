@@ -12,4 +12,4 @@
     - **Description:** Updated the system to use the unique user ID as the primary user identifier instead of the email address.
    
 - **Added Ability to Delete a Subject**
-    - **Description:** Implemented functionality that allows users to remove a subject from the list or database by specifying its unique identifier.
+    - **Description:** Implemented functionality that allows users to remove a subject from the list or database
