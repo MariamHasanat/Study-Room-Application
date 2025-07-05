@@ -1,5 +1,5 @@
 /* Body Style */
-.login-body{
+.login-body {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,4 +122,27 @@
     .form-submit {
         font-size: 0.9rem;
     }
+}
+
+#google-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(21, 110, 243);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    gap: 8px;
+    /* To add space between text & icon */
+}
+
+#google-btn img {
+    width: 19px;
+    height: 19px;
 }
