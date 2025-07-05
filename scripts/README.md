@@ -36,3 +36,6 @@ This web app helps users manage and track study subjects with integrated Firebas
 
 ---
 
+## 👩🏻‍💻 Modified by
+###  Ala' Abu-shomer
+
