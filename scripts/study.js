@@ -9,6 +9,7 @@ import {
     doc,
     getDoc,
     updateDoc,
+    arrayUnion,
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -102,6 +103,68 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "../pages/home.html";
                 } catch (error) {
                     console.error("Error deleting subject: ", error);
+                }
+            }
+        });
+    }
+
+    const editSubjectBtn = document.getElementById("edit-time-btn");
+    if (editSubjectBtn) {
+        editSubjectBtn.addEventListener("click", () => {
+            const newTime = prompt(
+                "Enter new time in HH:MM:SS format (e.g., 01:30:00 for 1 hour 30 minutes):",
+                "00:00:00"
+            );
+            if (newTime) {
+                const timeParts = newTime.split(":");
+
+                if (
+                    timeParts.length === 3 &&
+                    timeParts.every((part) => !isNaN(part) && part >= 0)
+                ) {
+                    // Update localStorage
+                    let subjects =
+                        JSON.parse(localStorage.getItem("subjects")) || [];
+                    subjects = subjects.map((subj) => {
+                        if (subj.name === subjectName) {
+                            return { ...subj, time: newTime };
+                        }
+                        return subj;
+                    });
+                    localStorage.setItem("subjects", JSON.stringify(subjects));
+
+                    // Update Realtime Database
+                    const safeEmail = sanitizeEmail(currentUser.email);
+                    const userSubjectRef = ref(
+                        database,
+                        `users/${safeEmail}/subjects/${subjectName}`
+                    );
+                    // Calculate startTime based on newTime (HH:MM:SS) and set endTime as now
+                    const [hours, minutes, seconds] = newTime
+                        .split(":")
+                        .map(Number);
+                    const durationMs =
+                        (hours * 3600 + minutes * 60 + seconds) * 1000;
+                    const endTime = Date.now();
+                    const startTime = endTime - durationMs;
+                    set(userSubjectRef, {
+                        startTime: startTime,
+                        endTime: endTime,
+                    });
+
+                    // Update Firestore
+                    const userDocRef = doc(firestore, "users", currentUser.uid);
+                    updateDoc(userDocRef, {
+                        subjects: arrayUnion({
+                            name: subjectName,
+                            time: newTime,
+                        }),
+                    });
+
+                    // Refresh the page to reflect changes
+                    window.location.reload();
+                } else {
+                    alert("Invalid time format. Please use HH:MM:SS.");
                 }
             }
         });

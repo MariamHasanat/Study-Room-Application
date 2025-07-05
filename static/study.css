@@ -134,7 +134,7 @@ article {
 #stop-study-btn {
     font-size: 1.25rem;
     color: #fff;
-    background-color: #e74c3c;
+    background-color: #e7a83c;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -145,7 +145,24 @@ article {
 }
 
 #stop-study-btn:hover {
-    background-color: #c0392b;
+    background-color: #bb8529;
+}
+
+#edit-time-btn {
+    font-size: 1.25rem;
+    color: #fff;
+    background-color: #3ce76f;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    width: 200px;
+}
+
+#edit-time-btn:hover {
+    background-color: #20bc4f;
 }
 
 #delete-subject-btn {
