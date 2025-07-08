@@ -27,8 +27,18 @@ ul {
     background-color: #f9f9f9;
     transition: box-shadow 0.3s ease;
 }
+.subject-info span button{
+    width: 22px;
+    height: 30px;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-left: 10px;
+}
 
-.subject-info:hover {
+.subject-info span button:hover {
+    cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

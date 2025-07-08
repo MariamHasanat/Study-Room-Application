@@ -1,7 +1,6 @@
 // Subject list rendering and management
 import { formatTime } from './time-utils.js';
 import { getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
 export function renderSubjectsAndTotalTimeLocalFirst(subjectList, totalTimeElement, emptyState, renderSubjectsAndTotalTimeFirestore, firestoreArgs) {
     const localSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
     subjectList.innerHTML = "";
@@ -60,6 +59,7 @@ export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTime
                     </span>
                     <span class="subject-name">${subj.name}</span>
                     <span class="subject-time">${subj.time || "00:00:00"}</span>
+                    <span class="color"><button onclick="handelDelete(${subj.name})">🗑️</button></span>
                 `;
                 subjectList.appendChild(li);
                 // Use the passed-in click handler
