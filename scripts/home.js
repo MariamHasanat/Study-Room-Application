@@ -4,6 +4,8 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  setDoc,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import {
   renderSubjectsAndTotalTimeLocalFirst,
@@ -97,7 +99,21 @@ confirmDeleteBtn.addEventListener("click", async () => {
       (subj) => subj.name !== currentDeletingSubject
     );
 
-    await updateDoc(userRef, { subjects: updatedSubjects });
+    // Check if user document exists
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      await updateDoc(userRef, { subjects: updatedSubjects });
+    } else {
+      // Create document if it doesn't exist
+      await setDoc(userRef, {
+        name: userData.name,
+        email: userData.email,
+        uid: userData.uid,
+        subjects: updatedSubjects,
+        createdAt: new Date().toISOString(),
+      });
+    }
 
     // Update Local Storage
     localStorage.setItem("subjects", JSON.stringify(updatedSubjects));
@@ -163,7 +179,21 @@ saveTimeBtn.addEventListener("click", async () => {
       subj.name === currentEditingSubject ? { ...subj, time: newTime } : subj
     );
 
-    await updateDoc(userRef, { subjects: updatedSubjects });
+    // Check if user document exists
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      await updateDoc(userRef, { subjects: updatedSubjects });
+    } else {
+      // Create document if it doesn't exist
+      await setDoc(userRef, {
+        name: userData.name,
+        email: userData.email,
+        uid: userData.uid,
+        subjects: updatedSubjects,
+        createdAt: new Date().toISOString(),
+      });
+    }
 
     // Update Local Storage
     localStorage.setItem("subjects", JSON.stringify(updatedSubjects));
@@ -272,16 +302,68 @@ addBtn.addEventListener("click", async () => {
   }
 
   try {
-    // Update Firestore
+    // Debug: Check user data
+    console.log("User data:", userData);
+
+    if (!userData || (!userData.uid && !userData.email)) {
+      alert("User authentication error. Please log in again.");
+      window.location.href = "../pages/login.html";
+      return;
+    }
+
+    // Check for duplicate subjects
+    const existingSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
+    const isDuplicate = existingSubjects.some(
+      (subj) => subj.name.toLowerCase() === subjectName.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      alert(
+        "A subject with this name already exists. Please choose a different name."
+      );
+      return;
+    }
+
+    console.log("Attempting to add subject:", subjectName);
+
+    // Update Firestore - Check if user document exists first
     const userRef = doc(firestore, "users", userData.uid || userData.email);
-    await updateDoc(userRef, {
-      subjects: arrayUnion({ name: subjectName, time: "00:00:00" }),
-    });
+    console.log("User reference:", userRef);
+
+    // Get current user document
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      // Document exists, check if subjects field exists
+      const userData_firestore = userSnap.data();
+      const currentSubjects = userData_firestore.subjects || [];
+
+      // Add new subject to the array
+      currentSubjects.push({ name: subjectName, time: "00:00:00" });
+
+      // Update the document
+      await updateDoc(userRef, {
+        subjects: currentSubjects,
+      });
+    } else {
+      // Document doesn't exist, create it with the subject
+      await setDoc(userRef, {
+        name: userData.name,
+        email: userData.email,
+        uid: userData.uid,
+        subjects: [{ name: subjectName, time: "00:00:00" }],
+        createdAt: new Date().toISOString(),
+      });
+    }
+
+    console.log("Firestore updated successfully");
 
     // Update Local Storage
     const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
     subjects.push({ name: subjectName, time: "00:00:00" });
     localStorage.setItem("subjects", JSON.stringify(subjects));
+
+    console.log("Local storage updated");
 
     // Update UI
     const newSubject = document.createElement("li");
@@ -319,9 +401,13 @@ addBtn.addEventListener("click", async () => {
     document.getElementById("subject-name-input").value = "";
     addSubjectForm.classList.add("hidden");
     formOverlay.style.display = "none";
+
+    alert("Subject added successfully!");
   } catch (error) {
     console.error("Error adding subject to Firestore: ", error);
-    alert("Failed to add subject. Please try again.");
+    console.error("Error details:", error.message);
+    console.error("Error code:", error.code);
+    alert("Failed to add subject. Please try again. Error: " + error.message);
   }
 });
 

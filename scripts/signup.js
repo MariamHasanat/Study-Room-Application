@@ -58,6 +58,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       name,
       email,
       uid: user.uid,
+      subjects: [], // Initialize empty subjects array
       createdAt: new Date().toISOString(),
     });
 
@@ -103,6 +104,7 @@ document
           uid: user.uid,
           photoURL: user.photoURL || "",
           provider: "google",
+          subjects: [], // Initialize empty subjects array
           createdAt: new Date().toISOString(),
         },
         { merge: true }
