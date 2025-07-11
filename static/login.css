@@ -123,3 +123,22 @@
         font-size: 0.9rem;
     }
 }
+/* Google Login Button */
+.google-login {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #357a38; 
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; 
+}
+
+.google-login:hover {
+    background-color: #c23321;
+}

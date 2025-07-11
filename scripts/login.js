@@ -1,7 +1,7 @@
 // Import Firebase SDK
 import { firestore } from "./firebase-config.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
+import { signInWithGoogle } from './firebase.js'; 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault(); // Prevent page reload
@@ -39,5 +39,19 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   } catch (error) {
     console.error("Error retrieving document: ", error);
     alert("Failed to login. Please try again.");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const googleLoginBtn = document.querySelector(".google-login");
+  if (googleLoginBtn) {
+    googleLoginBtn.addEventListener("click", async () => {
+      try {
+        await signInWithGoogle();
+      } catch (error) {
+        console.error("Failed to login", error);
+        alert("Error signing in with Google");
+      }
+    });
   }
 });

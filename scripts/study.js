@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const safeEmail = sanitizeEmail(userData.email);
             const userSubjectRef = ref(database, `users/${safeEmail}/subjects/${subjectName}`);
             const snapshot = await get(userSubjectRef);
+           // await set(userSubjectRef,{startTime:DataTransfer.now()});// Initialize startTime if not set
             if (snapshot.exists() && snapshot.val().startTime) {
                 startTime = Number(snapshot.val().startTime);
                 if (isNaN(startTime)) startTime = Date.now();
