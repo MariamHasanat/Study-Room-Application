@@ -1,397 +1,583 @@
-@import url('./style.css');
+@import url("./style.css");
 
 /* Style for Total Time */
 .total-time {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px 0;
-    color: #4CAF50;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+  color: #4caf50;
 }
 
 /* Style for Subject List */
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0 20px;
 }
 
 .subject-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer; /* Show it's clickable */
+}
+
+.subject-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto; /* Ensure buttons are clickable */
+}
+
+.subject-actions button {
+  pointer-events: auto; /* Ensure buttons handle their own events */
+  z-index: 10; /* Put buttons above other elements */
 }
 
 .subject-info:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .subject-info .material-symbols-outlined {
-    color: #4CAF50;
-    font-size: 1.2rem;
+  color: #4caf50;
+  font-size: 1.2rem;
 }
 
 .subject-name {
-    text-align: left;
-    flex: 1;
-    margin-left: 10px;
+  text-align: left;
+  flex: 1;
+  margin-left: 10px;
 }
 
 .website-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Style for Add Subject Button */
 button[type="button"] {
-    display: block;
-    margin: 20px 0 0 20px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: left;
+  display: block;
+  margin: 20px 0 0 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
 }
 
 button[type="button"]:hover {
-    background-color: #357a38;
+  background-color: #357a38;
 }
 
 /* Fixed Footer Style */
 .footer-section {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    text-align: center;
-    border-top: 2px solid #4CAF50;
-    z-index: 1000;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 2px solid #4caf50;
+  z-index: 1000;
 }
 
 /* Hidden class for the form */
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* Centered form styles */
-#add-subject-form {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f4f4f4;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-    z-index: 1000;
-    /* Ensure the form appears on top */
+#add-subject-form,
+#edit-time-form,
+#delete-confirmation-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  text-align: center;
+  z-index: 1000;
 }
 
 /* Overlay background */
 #form-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    /* Below the form but above other content */
-    display: none;
-    /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  /* Below the form but above other content */
+  display: none;
+  /* Hidden by default */
 }
 
 /* Form title */
 #add-subject-form h3 {
-    margin-bottom: 15px;
-    color: #4CAF50;
-    font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #4caf50;
+  font-size: 1.2rem;
+}
+
+/* Delete confirmation specific styles */
+#delete-confirmation-form {
+  border-color: #f44336;
+}
+
+#delete-confirmation-form h3 {
+  color: #f44336;
+  margin-bottom: 15px;
+}
+
+.warning-text {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#confirm-delete-btn {
+  background-color: #f44336 !important;
+  color: white;
+}
+
+#confirm-delete-btn:hover {
+  background-color: #d32f2f !important;
+}
+
+#cancel-delete-btn {
+  background-color: #9e9e9e !important;
+  color: white;
+}
+
+#cancel-delete-btn:hover {
+  background-color: #757575 !important;
 }
 
 /* Form input */
 #subject-name-input {
-    width: 90%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
+  width: 90%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Time inputs container */
+.time-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.time-group {
+  flex: 1;
+  text-align: center;
+}
+
+.time-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.time-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.time-group input:focus {
+  border-color: #4caf50;
+  outline: none;
 }
 
 /* Buttons in the form */
 .form-buttons {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .form-buttons button {
-    padding: 8px 15px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 8px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#add-btn {
-    background-color: #4CAF50;
-    color: white;
+#add-btn,
+#save-time-btn {
+  background-color: #4caf50;
+  color: white;
 }
 
-#add-btn:hover {
-    background-color: #3e8e41;
+#add-btn:hover,
+#save-time-btn:hover {
+  background-color: #3e8e41;
 }
 
-#cancel-btn {
-    background-color: #f44336;
-    color: white;
+#cancel-btn,
+#cancel-edit-btn {
+  background-color: #f44336;
+  color: white;
 }
 
-#cancel-btn:hover {
-    background-color: #d32f2f;
+#cancel-btn:hover,
+#cancel-edit-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Edit button styles */
+.edit-time-btn {
+  background-color: #2196f3 !important;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.edit-time-btn:hover {
+  background-color: #1976d2 !important;
+}
+
+/* Delete button styles */
+.delete-subject-btn {
+  background-color: #f44336 !important;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.delete-subject-btn:hover {
+  background-color: #d32f2f !important;
 }
 
 /* Loader overlay styles */
 .loader-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(5px);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
 }
 
 .loader-overlay.active {
-    display: flex;
+  display: flex;
 }
 
 .loader-img {
-    width: 240px;
-    height: 240px;
+  width: 240px;
+  height: 240px;
 }
 
 /* Header Style (copied from study.css for consistency) */
 .header-style {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #4CAF50;
-    color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
 }
 
 .logo-img-content {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background: url('../assets/study-room-logo.png') no-repeat center center;
-    background-size: cover;
-    margin-right: 10px;
-    border-radius: 50%;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: url("../assets/study-room-logo.png") no-repeat center center;
+  background-size: cover;
+  margin-right: 10px;
+  border-radius: 50%;
 }
 
 .website-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .nav-header {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding-left: 0;
-    justify-content: center;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-left: 0;
+  justify-content: center;
 }
 
 .nav-header li a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    display: block;
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: block;
 }
 
 .nav-header li a:hover {
-    background-color: #3e8e41;
+  background-color: #3e8e41;
 }
 
 .header-row {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header-row-bottom {
-    margin-top: 6px;
+  margin-top: 6px;
 }
 
 .logout-btn {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    color: #4CAF50;
-    border: 1px solid #4CAF50;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, border 0.2s;
-    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.08);
-    margin-left: 12px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.08);
+  margin-left: 12px;
 }
 
 .logout-btn:hover {
-    background: #4CAF50;
-    color: #fff;
+  background: #4caf50;
+  color: #fff;
 }
 
 .logout-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
 }
 
 .logout-text {
-    vertical-align: middle;
-    font-size: 1rem;
+  vertical-align: middle;
+  font-size: 1rem;
 }
 @media (max-width: 768px) {
-    .header-style {
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 10px;
-    }
+  .header-style {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    .website-title {
-        text-align: center;
-        width: 100%;
-    }
+  .website-title {
+    text-align: center;
+    width: 100%;
+  }
 
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
 
-    .footer-section {
-        height: auto;
-        min-height: 60px;
-        max-height: none;
-        padding: 10px 5px;
-    }
+  .footer-section {
+    height: auto;
+    min-height: 60px;
+    max-height: none;
+    padding: 10px 5px;
+  }
 
-    .footer-links,
-    .social-icons {
-        justify-content: center;
-    }
+  .footer-links,
+  .social-icons {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 600px) {
-    .header-row {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
+  .header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .header-row-bottom {
-        margin-top: 2px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-    }
+  .header-row-bottom {
+    margin-top: 2px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
 
-    .logout-btn {
-        padding: 4px 10px;
-        font-size: 0.8rem;
-        border-radius: 16px;
-        margin-left: 8px;
-    }
+  .logout-btn {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border-radius: 16px;
+    margin-left: 8px;
+  }
 
-    .logout-icon {
-        width: 16px;
-        height: 16px;
-        margin-right: 4px;
-    }
+  .logout-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
 
-    .website-title {
-        text-align: center;
-        width: 100%;
-    }
+  #add-subject-form,
+  #edit-time-form {
+    width: 90%;
+    padding: 15px;
+  }
 
-    .header-greeting {
-        font-size: 0.95rem;
-        padding: 2px 6px;
-        height: 28px;
-    }
+  .time-inputs {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .time-group input {
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+
+  .subject-actions {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .edit-time-btn,
+  .delete-subject-btn {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    margin-left: 3px;
+  }
+
+  .website-title {
+    font-size: 1.3rem;
+  }
+
+  .total-time {
+    font-size: 2rem;
+  }
+
+  .subject-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .subject-name {
+    margin-left: 0;
+    margin-bottom: 5px;
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.5rem;
+  }
+
+  .nav-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-header li a {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .footer-section {
+    font-size: 0.8rem;
+    padding: 8px 4px;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    font-size: 0.8rem;
+  }
+
+  .social-icons li a img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
 }
 
 @media (max-width: 480px) {
-    #study-timer {
-        font-size: 3rem;
-    }
+  #study-timer {
+    font-size: 3rem;
+  }
 
-    #stop-study-btn {
-        font-size: 1rem;
-        padding: 8px 16px;
-    }
+  #stop-study-btn {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
 
+  .header-greeting {
+    font-size: 0.95rem;
+    padding: 4px 10px;
+    margin-left: 0;
+    height: 32px;
+  }
 
-    .header-greeting {
-        font-size: 0.95rem;
-        padding: 4px 10px;
-        margin-left: 0;
-        height: 32px;
-    }
+  .social-icons li a {
+    font-size: 1rem;
+  }
 
-    .social-icons li a {
-        font-size: 1rem;
-    }
+  .footer-section {
+    font-size: 0.7rem;
+    padding: 6px 2px;
+  }
 
-    .footer-section {
-        font-size: 0.7rem;
-        padding: 6px 2px;
-    }
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    font-size: 0.7rem;
+  }
 
-    .footer-left,
-    .footer-center,
-    .footer-right {
-        font-size: 0.7rem;
-    }
-
-    .social-icons li a img {
-        width: 18px;
-        height: 18px;
-        margin-right: 4px;
-    }
+  .social-icons li a img {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+  }
 }

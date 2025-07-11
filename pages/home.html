@@ -58,6 +58,40 @@
                 <button id="cancel-btn" type="button">Cancel</button>
             </div>
         </div>
+
+        <!-- Form to Edit Subject Time -->
+        <div id="edit-time-form" class="hidden">
+            <h3>Edit Study Time</h3>
+            <div class="time-inputs">
+                <div class="time-group">
+                    <label for="hours-input">Hours</label>
+                    <input type="number" id="hours-input" min="0" max="23" value="0" />
+                </div>
+                <div class="time-group">
+                    <label for="minutes-input">Minutes</label>
+                    <input type="number" id="minutes-input" min="0" max="59" value="0" />
+                </div>
+                <div class="time-group">
+                    <label for="seconds-input">Seconds</label>
+                    <input type="number" id="seconds-input" min="0" max="59" value="0" />
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button id="save-time-btn" type="button">Save</button>
+                <button id="cancel-edit-btn" type="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="delete-confirmation-form" class="hidden">
+            <h3>Delete Subject</h3>
+            <p id="delete-message">Are you sure you want to delete this subject?</p>
+            <p class="warning-text">This action cannot be undone!</p>
+            <div class="form-buttons">
+                <button id="confirm-delete-btn" type="button">Delete</button>
+                <button id="cancel-delete-btn" type="button">Cancel</button>
+            </div>
+        </div>
     </article>
     <footer class="footer-section">
         <div class="footer-content">
@@ -71,8 +105,8 @@
                                 src="../assets/github-icon.png" alt="">&nbsp;GitHub</a>
                     </li>&nbsp;
                     <li>
-                        <a class="imgName" href="https://www.linkedin.com/in/mariam-hasanat"
-                            rel="noopener noreferrer" target="_blank">
+                        <a class="imgName" href="https://www.linkedin.com/in/mariam-hasanat" rel="noopener noreferrer"
+                            target="_blank">
                             <img id="iconContact" src="../assets/linkin-icon.png" alt="linkin-icon">&nbsp;LinkedIn</a>
                     </li>&nbsp;
                     <li>

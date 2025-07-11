@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script type="module" src="../scripts/login.js" defer></script>
     <title>Study Room Application</title>
 </head>
+
 <body class="login-body">
     <div class="form-container">
         <!-- Branding Section -->
@@ -27,9 +29,22 @@
             </div>
             <button type="submit" class="form-submit">Login Account</button>
         </form>
+
+        <!-- OR Divider -->
+        <div class="divider">
+            <span>OR</span>
+        </div>
+
+        <!-- Google Login Button -->
+        <button type="button" class="google-login-btn" id="google-login-btn">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-icon">
+            Sign in with Google
+        </button>
+
         <br>
         <a href="../pages/signup.html">Don't have an account?</a>
         <br>
     </div>
 </body>
+
 </html>
