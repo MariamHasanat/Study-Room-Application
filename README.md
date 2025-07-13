@@ -81,7 +81,11 @@ Both methods direct you to the same home page after login.
 ## 📷 Example Screens
 
 - **Landing Page:**\
+<<<<<<< HEAD
 ![Sign-Up Page](./screenshots/landing.png)
+=======
+![Sign-Up Page](./Screenshots/signup.png)
+>>>>>>> 687c69ce127518636b312d12e51c5b24f14440fa
 
 - **Sign-Up Page:**\
 ![Sign-Up Page](./screenshots/signup.png)
