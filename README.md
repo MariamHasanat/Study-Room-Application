@@ -93,7 +93,7 @@ Both methods direct you to the same home page after login.
 - **Home Page:**\
 ![Sign-Up Page](./screenshots/home.png)
 
-- **Studdy Page:**\
+- **Study Page:**\
 ![Sign-Up Page](./screenshots/study.png)
 ---
 
