@@ -1,6 +1,7 @@
 // Import Firebase SDK
-import { firestore } from "./firebase-config.js";
+import { firestore, auth } from "./firebase-config.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -29,12 +30,14 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   }
 
   try {
-    // Add user info to Firestore
+    // Create user in Firebase Auth
+    await createUserWithEmailAndPassword(auth, email, password);
+
+    // Optionally, store extra info in Firestore (password is NOT stored here)
     const userRef = doc(firestore, "users", email); // Use email as a unique document ID
     await setDoc(userRef, {
       name,
       email,
-      password,
       createdAt: new Date().toISOString()
     });
 

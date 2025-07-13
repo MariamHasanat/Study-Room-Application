@@ -2,6 +2,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,3 +23,4 @@ databaseURL: "https://fir-bootcamp-ad71b-default-rtdb.firebaseio.com/"
 export const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
 export const database = getDatabase(app);
+export const auth = getAuth(app);

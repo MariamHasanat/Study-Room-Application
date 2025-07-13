@@ -68,8 +68,8 @@
     outline: none;
 }
 
-/* Submit Button */
-.form-submit {
+/* Submit Button + Login with google btn */
+.form-submit, #google-signin-btn {
     display: block;
     width: 100%;
     padding: 10px;
@@ -87,6 +87,22 @@
     background-color: #357a38;
 }
 
+#google-signin-btn {
+    background-color: #5182d7;
+}
+
+#google-signin-btn:hover {
+    background-color: #103266;
+}
+
+#google-signin-btn img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .form-container {
@@ -101,7 +117,7 @@
         font-size: 0.95rem;
     }
 
-    .form-submit {
+    .form-submit, #google-signin-btn {
         font-size: 0.95rem;
     }
 }
@@ -119,7 +135,7 @@
         font-size: 0.9rem;
     }
 
-    .form-submit {
+    .form-submit, #google-signin-btn {
         font-size: 0.9rem;
     }
 }
