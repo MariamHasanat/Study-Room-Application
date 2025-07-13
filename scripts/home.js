@@ -3,9 +3,9 @@ import { firestore, database } from "./firebase-config.js";
 import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 import { renderSubjectsAndTotalTimeLocalFirst, renderSubjectsAndTotalTimeFirestore } from './subject-list.js';
 import { addSubjectClickListener } from './subject-utils.js';
-import { formatTime } from './time-utils.js';
 import { setGreeting } from './greeting.js';
 import { setupLogout } from './logout.js';
+import { setupDeleteSubject } from './delete-subject.js';
 
 // Load user data from local storage
 const userData = JSON.parse(localStorage.getItem("userName"));
@@ -68,16 +68,21 @@ addBtn.addEventListener("click", async () => {
         const newSubject = document.createElement("li");
         newSubject.className = "subject-info";
         newSubject.innerHTML = `
-            <span class="color">
-                <span class="material-symbols-outlined">play_arrow</span>
-            </span>
-            <span class="subject-name">${subjectName}</span>
-            <span class="subject-time">00:00:00</span>
+            <div class="subject-left">
+                <span class="color">
+                    <span class="material-symbols-outlined">play_arrow</span>
+                </span>
+                <span class="subject-name">${subjectName}</span>
+            </div>
+            <div class="subject-right">
+                <span class="subject-time">00:00:00</span>
+                <button class="delete-subject-btn" title="Delete subject">🗑️</button>
+            </div>
         `;
         subjectList.appendChild(newSubject);
 
         // Add click event to the new subject (modular version)
-        addSubjectClickListener(newSubject, subjectName, database, userData, sanitizeEmail);
+        addSubjectClickListener(newSubject, subjectName, database, userData, sanitizeEmail, deleteSubjectHandler);
 
         // Hide empty state image if visible
         const emptyState = document.getElementById("empty-state");
@@ -103,19 +108,15 @@ window.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById("loader");
     if (loader) loader.classList.add("active");
     const subjectListElem = document.getElementById("subject-list");
-    const totalTimeElem = document.querySelector(".total-time-value");
     const emptyStateElem = document.getElementById("empty-state");
     const userRef = doc(firestore, "users", userData.email);
     renderSubjectsAndTotalTimeLocalFirst(
         subjectListElem,
-        totalTimeElem,
         emptyStateElem,
         renderSubjectsAndTotalTimeFirestore,
         [
             subjectListElem,
-            totalTimeElem,
-            (li, name) => addSubjectClickListener(li, name, database, userData, sanitizeEmail),
-            formatTime,
+            (li, name) => addSubjectClickListener(li, name, database, userData, sanitizeEmail, deleteSubjectHandler),
             userRef,
             localStorage,
             loader,
@@ -123,6 +124,10 @@ window.addEventListener("DOMContentLoaded", () => {
         ]
     );
 });
+
+// Setup delete subject functionality
+const deleteSubjectHandler = setupDeleteSubject();
+deleteSubjectHandler.setUserData(userData);
 
 // Logout logic
 const logoutBtn = document.getElementById("logout-btn");

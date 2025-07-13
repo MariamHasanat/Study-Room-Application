@@ -70,22 +70,45 @@
 
 /* Submit Button */
 .form-submit {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 100%; 
+  min-height: 45px; 
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.form-submit:hover {
+  background-color: #357a38;
+}
+
 
 .form-submit:hover {
     background-color: #357a38;
 }
+
+
+.google-btn {
+  gap: 10px; 
+  margin-top: 10px;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 50%;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

@@ -1,6 +1,7 @@
 // Import Firebase SDK
-import { firestore } from "./firebase-config.js";
+import { firestore, auth } from "./firebase-config.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";  
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -23,25 +24,43 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     return;
   }
 
-  if (password.length < 4 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
-    alert("Password must be at least 4 characters long and include uppercase, lowercase, and a number.");
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters long.");
+    return;
+  }
+
+  if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+    alert("Password must include uppercase, lowercase, and a number.");
     return;
   }
 
   try {
-    // Add user info to Firestore
-    const userRef = doc(firestore, "users", email); // Use email as a unique document ID
+    // Create user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    
+    // Add user info to Firestore (without password for security)
+    const userRef = doc(firestore, "users", email);
     await setDoc(userRef, {
       name,
       email,
-      password,
       createdAt: new Date().toISOString()
     });
 
-    alert("Account created successfully.");
-    window.location.href = "../pages/login.html"; // Redirect to login page
+    alert("Account created successfully!");
+    window.location.href = "../pages/login.html";
   } catch (error) {
-    console.error("Error adding document: ", error);
-    alert("Failed to create account. Please try again.");
+    console.error("Error creating account: ", error);
+    
+    // More specific error messages
+    if (error.code === 'auth/email-already-in-use') {
+      alert("This email is already registered. Please use a different email or try logging in.");
+    } else if (error.code === 'auth/weak-password') {
+      alert("Password is too weak. Please use a stronger password.");
+    } else if (error.code === 'auth/invalid-email') {
+      alert("Please enter a valid email address.");
+    } else {
+      alert("Failed to create account: " + error.message);
+    }
   }
 });

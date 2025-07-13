@@ -34,10 +34,6 @@
     <article>
         <div class="header-actions">
             <button id="add-subject-btn" type="button">+ Subject</button>
-            <div class="total-time">
-                <div>Total Study Time</div>
-                <span class="total-time-value">00:00:00</span>
-            </div>
         </div>
         <ul id="subject-list">
         </ul>
@@ -56,6 +52,19 @@
             <div class="form-buttons">
                 <button id="add-btn" type="button">Add</button>
                 <button id="cancel-btn" type="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="delete-confirmation-modal" class="hidden">
+            <div class="modal-content">
+                <h3>Delete Subject</h3>
+                <p>Are you sure you want to delete "<span id="subject-to-delete"></span>"?</p>
+                <p class="warning-text">This action cannot be undone.</p>
+                <div class="modal-buttons">
+                    <button id="confirm-delete-btn" type="button">Delete</button>
+                    <button id="cancel-delete-btn" type="button">Cancel</button>
+                </div>
             </div>
         </div>
     </article>

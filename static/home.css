@@ -1,14 +1,5 @@
 @import url('./style.css');
 
-/* Style for Total Time */
-.total-time {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px 0;
-    color: #4CAF50;
-}
-
 /* Style for Subject List */
 ul {
     list-style: none;
@@ -26,6 +17,40 @@ ul {
     border-radius: 5px;
     background-color: #f9f9f9;
     transition: box-shadow 0.3s ease;
+    position: relative;
+}
+
+.subject-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.subject-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-subject-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+}
+
+.delete-subject-btn:hover {
+    background-color: #e74c3c;
+    color: white;
 }
 
 .subject-info:hover {
@@ -116,6 +141,88 @@ button[type="button"]:hover {
     /* Below the form but above other content */
     display: none;
     /* Hidden by default */
+}
+
+/* Delete Confirmation Modal */
+#delete-confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#delete-confirmation-modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-content h3 {
+    color: #e74c3c;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.modal-content p {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1rem;
+}
+
+.warning-text {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 80px;
+}
+
+#confirm-delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#confirm-delete-btn:hover {
+    background-color: #c0392b;
+}
+
+#cancel-delete-btn {
+    background-color: #95a5a6;
+    color: white;
+}
+
+#cancel-delete-btn:hover {
+    background-color: #7f8c8d;
 }
 
 /* Form title */
@@ -393,5 +500,29 @@ button[type="button"]:hover {
         width: 18px;
         height: 18px;
         margin-right: 4px;
+    }
+
+    /* Modal responsive design */
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .modal-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .modal-content p {
+        font-size: 0.9rem;
+    }
+
+    .modal-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-buttons button {
+        width: 100%;
+        padding: 12px;
     }
 }
