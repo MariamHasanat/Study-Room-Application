@@ -55,4 +55,4 @@ A web application for managing study time with Firebase Authentication and Fires
 
 ---
 **Happy Studying!** 
-**Aya Mehjez**
+
