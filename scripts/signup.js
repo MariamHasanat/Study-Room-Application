@@ -1,6 +1,7 @@
 // Import Firebase SDK
-import { firestore } from "./firebase-config.js";
+import { firestore, auth } from "./firebase-config.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import { GoogleAuthProvider, signInWithPopup, getAuth, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -45,3 +46,46 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     alert("Failed to create account. Please try again.");
   }
 });
+
+const googleSignUpBtn = document.getElementById("google-signup-btn"); // Ensure this ID exists in your signup.html
+
+if (googleSignUpBtn) {
+    googleSignUpBtn.addEventListener("click", async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user; // The signed-in user info
+
+            // Handle storing user data in Firestore if it's a new user
+            const userRef = doc(firestore, "users", user.email);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                // If user doesn't exist in Firestore, create their document
+                await setDoc(userRef, {
+                    name: user.displayName || user.email.split('@')[0],
+                    email: user.email,
+                    createdAt: new Date().toISOString(),
+                    subjects: [] // Initialize subjects for new Google users
+                });
+            }
+
+            // Save essential user data to local storage
+            localStorage.setItem('userName', JSON.stringify({
+                name: userSnap.exists() ? userSnap.data().name : (user.displayName || user.email.split('@')[0]),
+                email: user.email
+            }));
+
+            alert("Account created/logged in successfully with Google!");
+            window.location.href = "../pages/home.html";
+
+        } catch (error) {
+            console.error("Error during Google Sign-Up/Login:", error);
+            if (error.code === 'auth/popup-closed-by-user') {
+                alert("Google Sign-Up was cancelled or the popup was closed.");
+            } else {
+                alert("Failed to sign up/log in with Google. Please try again.");
+            }
+        }
+    });
+}
