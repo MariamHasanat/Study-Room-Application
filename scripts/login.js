@@ -1,6 +1,6 @@
 // Import Firebase SDK
 import { firestore } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 // Form submission handler
 document.querySelector("form").addEventListener("submit", async (e) => {

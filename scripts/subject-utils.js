@@ -1,4 +1,4 @@
-import { ref, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 // Utility for subject click events
 export function addSubjectClickListener(subjectElement, subjectName, database, userData, sanitizeEmail) {
