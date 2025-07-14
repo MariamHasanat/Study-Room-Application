@@ -84,7 +84,6 @@ if (googleSignInBtn) {
 
         } catch (error) {
             console.error("Error during Google Sign-In:", error);
-            // Provide user-friendly error messages based on Firebase error codes
             if (error.code === 'auth/popup-closed-by-user') {
                 alert("Google Sign-In was cancelled or the popup was closed.");
             } else if (error.code === 'auth/cancelled-popup-request') {
