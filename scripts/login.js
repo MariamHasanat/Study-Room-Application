@@ -1,43 +1,38 @@
-// Import Firebase SDK
-import { firestore } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { auth, firestore, GoogleAuthProvider } from './firebase-init.js';
+import { signInWithPopup } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-// Form submission handler
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault(); // Prevent page reload
+document.addEventListener("DOMContentLoaded", function () {
+  const provider = new GoogleAuthProvider();
+  const googleBtn = document.getElementById("google-btn");
 
-  // Collect user input
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+  if (googleBtn) {
+    googleBtn.addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
 
-  // Validate input
-  if (!email || !password) {
-    alert("Both fields are required.");
-    return;
-  }
+        const userRef = doc(firestore, "users", user.uid); // استخدم UID بدلاً من الإيميل لتفادي المشاكل
+        await setDoc(userRef, {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: new Date().toISOString()
+        }, { merge: true });
 
-  try {
-    // Retrieve user data from Firestore
-    const userRef = doc(firestore, "users", email);
-    const userSnap = await getDoc(userRef);
+        localStorage.setItem('user', JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        }));
 
-    if (!userSnap.exists()) {
-      alert("User not found. Please check your email.");
-      return;
-    }
-
-    const userData = userSnap.data();
-
-    // Check if password matches (You should use Firebase Auth for real apps)
-    if (password === userData.password) {
-      alert("Login successful!");
-      localStorage.setItem('userName', JSON.stringify(userData));
-      window.location.href = "../pages/home.html"; // Redirect to home page
-    } else {
-      alert("Incorrect password. Please try again.");
-    }
-  } catch (error) {
-    console.error("Error retrieving document: ", error);
-    alert("Failed to login. Please try again.");
+        window.location.href = "../pages/home.html";
+      } catch (error) {
+        console.error("Google sign-in failed:", error);
+        alert("فشل تسجيل الدخول بحساب Google: " + error.message);
+      }
+    });
+  } else {
+    console.warn("زر تسجيل دخول Google غير موجود في الصفحة.");
   }
 });
