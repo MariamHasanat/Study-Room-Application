@@ -19,6 +19,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   try {
     // Retrieve user data from Firestore
     const userRef = doc(firestore, "users", email);
+    // Get the document snapshot
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
