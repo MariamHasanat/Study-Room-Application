@@ -50,7 +50,12 @@ formOverlay.addEventListener("click", () => {
   formOverlay.style.display = "none";
 });
 
-// Add Subject Functionality
+// Helper function to sanitize email for Firestore keys if needed
+function sanitizeEmail(email) {
+  return email.replace(/\./g, ",");
+}
+
+// Add Subject Functionality without location.reload()
 addBtn.addEventListener("click", async () => {
   const subjectName = document
     .getElementById("subject-name-input")
@@ -62,42 +67,37 @@ addBtn.addEventListener("click", async () => {
   }
 
   try {
-    // Update Firestore
-    const userRef = doc(firestore, "users", userData.email); // Use email as the document ID
+    // Reference to user document
+    const userRef = doc(firestore, "users", userData.email);
+
+    // Update Firestore: add new subject to the array
     await updateDoc(userRef, {
       subjects: arrayUnion({ name: subjectName, time: "00:00:00" }),
     });
 
-    // Update Local Storage
+    // Update localStorage: add new subject
     const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
     subjects.push({ name: subjectName, time: "00:00:00" });
     localStorage.setItem("subjects", JSON.stringify(subjects));
 
-    // Update UI
-    const newSubject = document.createElement("li");
-    newSubject.className = "subject-info";
-    newSubject.innerHTML = `
-            <span class="color">
-                <span class="material-symbols-outlined">play_arrow</span>
-            </span>
-            <span class="subject-name">${subjectName}</span>
-            <span class="subject-time">00:00:00</span>
-        `;
-    subjectList.appendChild(newSubject);
-    location.reload(); // Reload to reflect changes
-
-    // Add click event to the new subject (modular version)
-    addSubjectClickListener(
-      newSubject,
-      subjectName,
-      database,
-      userData,
-      sanitizeEmail
+    // Re-render the subject list and total time from local first
+    renderSubjectsAndTotalTimeLocalFirst(
+      subjectList,
+      document.querySelector(".total-time-value"),
+      document.getElementById("empty-state"),
+      renderSubjectsAndTotalTimeFirestore,
+      [
+        subjectList,
+        document.querySelector(".total-time-value"),
+        (li, name) =>
+          addSubjectClickListener(li, name, database, userData, sanitizeEmail),
+        formatTime,
+        userRef,
+        localStorage,
+        document.getElementById("loader"),
+        document.getElementById("empty-state"),
+      ]
     );
-
-    // Hide empty state image if visible
-    const emptyState = document.getElementById("empty-state");
-    if (emptyState) emptyState.style.display = "none";
 
     // Reset form and hide overlay
     document.getElementById("subject-name-input").value = "";
@@ -109,11 +109,7 @@ addBtn.addEventListener("click", async () => {
   }
 });
 
-function sanitizeEmail(email) {
-  return email.replace(/\./g, ",");
-}
-
-// Fetch and render subjects from localStorage first, then Firestore
+// Fetch and render subjects from localStorage first, then Firestore on page load
 window.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");
   if (loader) loader.classList.add("active");
