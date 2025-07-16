@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/home.css">
+    <link rel="stylesheet" href="../static/enhanced-features.css">
     <script type="module" src="../scripts/home.js" defer></script>
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&icon_names=play_arrow" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&icon_names=play_arrow,delete,edit" />
     <title>Study Room Application</title>
 </head>
 
@@ -56,6 +57,34 @@
             <div class="form-buttons">
                 <button id="add-btn" type="button">Add</button>
                 <button id="cancel-btn" type="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Edit Time Form -->
+        <div id="edit-time-form" class="hidden">
+            <h3>Edit Study Time</h3>
+            <p id="edit-subject-name"></p>
+            <div class="time-inputs">
+                <input type="number" id="hours-input" min="0" max="23" placeholder="Hours" />
+                <span>:</span>
+                <input type="number" id="minutes-input" min="0" max="59" placeholder="Minutes" />
+                <span>:</span>
+                <input type="number" id="seconds-input" min="0" max="59" placeholder="Seconds" />
+            </div>
+            <div class="form-buttons">
+                <button id="save-time-btn" type="button">Save</button>
+                <button id="cancel-edit-btn" type="button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Dialog -->
+        <div id="delete-confirmation" class="hidden">
+            <h3>Delete Subject</h3>
+            <p>Are you sure you want to delete "<span id="delete-subject-name"></span>"?</p>
+            <p style="color: #e74c3c; font-size: 0.9em;">This action cannot be undone.</p>
+            <div class="form-buttons">
+                <button id="confirm-delete-btn" type="button">Delete</button>
+                <button id="cancel-delete-btn" type="button">Cancel</button>
             </div>
         </div>
     </article>

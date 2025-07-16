@@ -1,0 +1,195 @@
+/* Enhanced Features Styles for Study Room Application */
+/* Author: Shadi Sbaih */
+
+/* Enhanced Subject Actions */
+.subject-info {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.subject-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.subject-info:hover .subject-actions {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subject-actions {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Enhanced Buttons */
+.edit-btn, .delete-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-btn::before, .delete-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.edit-btn:hover::before, .delete-btn:hover::before {
+    left: 100%;
+}
+
+/* Enhanced Forms */
+.form-container-enhanced {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Time Input Enhancements */
+.time-inputs input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+/* Success/Error Messages */
+.message {
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    text-align: center;
+    font-weight: 500;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Loading States */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Google Button */
+.google-signin-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.google-signin-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(66, 133, 244, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.google-signin-btn:hover::before {
+    left: 100%;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .subject-actions {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .edit-btn, .delete-btn {
+        padding: 8px;
+    }
+    
+    .edit-btn .material-symbols-outlined,
+    .delete-btn .material-symbols-outlined {
+        font-size: 1rem;
+    }
+}
+
+/* Dark Mode Support (Future Enhancement) */
+@media (prefers-color-scheme: dark) {
+    .form-container-enhanced {
+        background: rgba(30, 30, 30, 0.95);
+        color: #ffffff;
+    }
+    
+    .message.success {
+        background-color: #1e4620;
+        color: #4caf50;
+        border-color: #2e7d32;
+    }
+    
+    .message.error {
+        background-color: #4a1e1e;
+        color: #f44336;
+        border-color: #d32f2f;
+    }
+}
+
+/* Enhanced Empty State */
+.empty-state-enhanced {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.empty-state-enhanced img {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.empty-state-enhanced:hover img {
+    opacity: 0.8;
+}
+
+.empty-state-enhanced h3 {
+    margin: 20px 0 10px;
+    color: #4CAF50;
+    font-size: 1.2rem;
+}
+
+.empty-state-enhanced p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}

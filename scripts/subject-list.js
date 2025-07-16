@@ -18,14 +18,25 @@ export function renderSubjectsAndTotalTimeLocalFirst(subjectList, totalTimeEleme
             <span class="color">
                 <span class="material-symbols-outlined">play_arrow</span>
             </span>
-            <span class="subject-name">${subj.name}</span>
+            <span class="subject-name" data-subject="${subj.name}">${subj.name}</span>
             <span class="subject-time">${subj.time || "00:00:00"}</span>
+            <div class="subject-actions">
+                <button class="edit-btn" title="Edit time" data-subject="${subj.name}">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+                <button class="delete-btn" title="Delete subject" data-subject="${subj.name}">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
         `;
         subjectList.appendChild(li);
-        // Use the passed-in click handler
+        
+        // Add click listener for subject name only
+        const subjectNameElement = li.querySelector('.subject-name');
         if (firestoreArgs && typeof firestoreArgs[2] === 'function') {
-            firestoreArgs[2](li, subj.name);
+            firestoreArgs[2](subjectNameElement, subj.name);
         }
+        
         // Calculate total time
         if (subj.time) {
             const parts = subj.time.split(":");
@@ -58,12 +69,23 @@ export async function renderSubjectsAndTotalTimeFirestore(subjectList, totalTime
                     <span class="color">
                         <span class="material-symbols-outlined">play_arrow</span>
                     </span>
-                    <span class="subject-name">${subj.name}</span>
+                    <span class="subject-name" data-subject="${subj.name}">${subj.name}</span>
                     <span class="subject-time">${subj.time || "00:00:00"}</span>
+                    <div class="subject-actions">
+                        <button class="edit-btn" title="Edit time" data-subject="${subj.name}">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        <button class="delete-btn" title="Delete subject" data-subject="${subj.name}">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
                 `;
                 subjectList.appendChild(li);
-                // Use the passed-in click handler
-                addSubjectClickListener(li, subj.name);
+                
+                // Add click listener for subject name only
+                const subjectNameElement = li.querySelector('.subject-name');
+                addSubjectClickListener(subjectNameElement, subj.name);
+                
                 // Calculate total time
                 if (subj.time) {
                     const parts = subj.time.split(":");

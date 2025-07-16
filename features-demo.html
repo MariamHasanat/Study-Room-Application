@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل الميزات الجديدة - تطبيق غرفة الدراسة</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4CAF50;
+        }
+        .feature {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4CAF50;
+        }
+        .feature h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        .steps {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .steps ol {
+            margin: 0;
+            padding-right: 20px;
+        }
+        .tech-stack {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 5px;
+        }
+        .button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #45a049;
+        }
+        .emoji {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 الميزات الجديدة المضافة لتطبيق غرفة الدراسة</h1>
+            <p>تم تطوير هذه الميزات بواسطة: <strong>شادي صبيح</strong></p>
+        </div>
+
+        <div class="feature">
+            <h3>🗑️ 1. حذف المواد الدراسية</h3>
+            <p>الآن يمكنك حذف أي مادة دراسية لا تحتاجها بعد الآن مع تأكيد آمن لتجنب الحذف العرضي.</p>
+            <div class="steps">
+                <strong>كيفية الاستخدام:</strong>
+                <ol>
+                    <li>انتقل إلى الصفحة الرئيسية</li>
+                    <li>ابحث عن المادة المراد حذفها</li>
+                    <li>اضغط على أيقونة الحذف الحمراء 🗑️</li>
+                    <li>أكد عملية الحذف في النافذة المنبثقة</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="feature">
+            <h3>⏰ 2. تعديل أوقات الدراسة</h3>
+            <p>يمكنك الآن تعديل الوقت المسجل لأي مادة دراسية، سواء لتصحيح خطأ أو لتحديث السجلات.</p>
+            <div class="steps">
+                <strong>كيفية الاستخدام:</strong>
+                <ol>
+                    <li>اضغط على أيقونة التعديل الخضراء ✏️</li>
+                    <li>أدخل الوقت الجديد (ساعات:دقائق:ثواني)</li>
+                    <li>اضغط "Save" لحفظ التغييرات</li>
+                    <li>سيتم تحديث الوقت فوراً في النظام</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="feature">
+            <h3>🔐 3. تسجيل الدخول باستخدام Google</h3>
+            <p>تسجيل دخول سريع وآمن باستخدام حساب Google الخاص بك، بدون الحاجة لحفظ كلمات مرور إضافية.</p>
+            <div class="steps">
+                <strong>كيفية الاستخدام:</strong>
+                <ol>
+                    <li>في صفحة تسجيل الدخول، اضغط "Continue with Google"</li>
+                    <li>اختر حساب Google المطلوب</li>
+                    <li>سيتم تسجيل الدخول تلقائياً</li>
+                    <li>إذا كان حساب جديد، سيتم إنشاؤه تلقائياً</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="tech-stack">
+            <h3>🔧 التقنيات المستخدمة:</h3>
+            <div>
+                <span class="badge">HTML5</span>
+                <span class="badge">CSS3</span>
+                <span class="badge">JavaScript ES6+</span>
+                <span class="badge">Firebase Firestore</span>
+                <span class="badge">Firebase Auth</span>
+                <span class="badge">Google OAuth</span>
+                <span class="badge">Material Icons</span>
+                <span class="badge">Responsive Design</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" class="button">🏠 العودة للصفحة الرئيسية</a>
+            <a href="../pages/login.html" class="button">🚀 تجربة التطبيق</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #eee;">
+            <p><strong>📧 تواصل مع المطور:</strong></p>
+            <p>GitHub: <a href="https://github.com/MariamHasanat" target="_blank">MariamHasanat</a></p>
+            <p>تم التطوير في إطار البرنامج التدريبي لتطوير الويب</p>
+        </div>
+    </div>
+</body>
+</html>
