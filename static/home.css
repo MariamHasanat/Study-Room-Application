@@ -41,6 +41,46 @@ ul {
     text-align: left;
     flex: 1;
     margin-left: 10px;
+    cursor: pointer;
+}
+
+.subject-time {
+    margin-right: 10px;
+}
+
+.subject-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+    background-color: #e8f5e8;
+}
+
+.delete-btn:hover {
+    background-color: #ffeaea;
+}
+
+.edit-btn .material-symbols-outlined {
+    color: #4CAF50;
+    font-size: 1.1rem;
+}
+
+.delete-btn .material-symbols-outlined {
+    color: #e74c3c;
+    font-size: 1.1rem;
 }
 
 .website-title {
@@ -88,7 +128,7 @@ button[type="button"]:hover {
 }
 
 /* Centered form styles */
-#add-subject-form {
+#add-subject-form, #edit-time-form, #delete-confirmation {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -102,6 +142,47 @@ button[type="button"]:hover {
     text-align: center;
     z-index: 1000;
     /* Ensure the form appears on top */
+}
+
+/* Time inputs styling */
+.time-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.time-inputs input {
+    width: 60px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.time-inputs span {
+    font-weight: bold;
+    color: #666;
+}
+
+/* Delete confirmation styling */
+#delete-confirmation {
+    width: 350px;
+}
+
+#delete-confirmation p {
+    margin: 10px 0;
+}
+
+#confirm-delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#confirm-delete-btn:hover {
+    background-color: #c0392b;
 }
 
 /* Overlay background */
