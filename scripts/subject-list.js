@@ -1,6 +1,6 @@
 // Subject list rendering and management
 import { formatTime } from './time-utils.js';
-import { getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 export function renderSubjectsAndTotalTimeLocalFirst(subjectList, totalTimeElement, emptyState, renderSubjectsAndTotalTimeFirestore, firestoreArgs) {
     const localSubjects = JSON.parse(localStorage.getItem("subjects")) || [];

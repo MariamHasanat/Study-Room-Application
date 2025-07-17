@@ -1,7 +1,7 @@
 // Import Firebase SDK
-import { get, ref, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { get, ref, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 import { firestore, database } from "./firebase-config.js";
-import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {

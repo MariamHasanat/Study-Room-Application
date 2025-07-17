@@ -123,3 +123,35 @@
         font-size: 0.9rem;
     }
 }
+.google-signin-button {
+    
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    background-color: #b5e5a4; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+    cursor: pointer; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: background-color 0.3s ease; 
+    width: fit-content;
+    margin: 0 auto; 
+    padding: 10px 114px;
+}
+
+.google-signin-button:hover {
+    background-color: #4CAF50;
+}
+
+.google-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px; 
+    background-color: #b5e5a4; 
+    border-radius: 2px;
+    padding: 2px;
+}
